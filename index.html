@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>The World Exchange - Trade, Issue, and Send Anything Anywhere in Real Time</title>
+    <meta name="description" content="A free fully decentralized exchange and purely client-side wallet powered by Ripple.  Trade, issue, and send anything anywhere in real time.">
+    <meta name="keywords" content="World Exchange, Decentralized Exchange, Ripple, Ripple Wallet, Ripple Paper Wallet, Ripple Exchange, RippleTrade, Ripple Chat, Ripple Chat Box, XRP, Blockchain, ICO, ITO, IPO, Payments, Trading, Issuance, Remittance, Cryptocurrency">
+    <script type="text/javascript" src="jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="jquery-ui.min.js"></script>
+    <script type="text/javascript" src="linq.min.js"></script>
+    <script type="text/javascript" src="jquery.linq.min.js"></script>
+    <script type="text/javascript" src="js.cookie-2.1.3.min.js"></script>
+    <script type="text/javascript" src="lodash.js"></script>
+    <script type="text/javascript" src="ripple-0.17.7_fixed-iPhone_with-derive-keypair-and-address.js"></script>
+    <script type="text/javascript" src="jquery.kinetic.min.js"></script>
+    <script type="text/javascript" src="jquery.mousewheel.min.js"></script>
+    <script type="text/javascript" src="jquery.smoothdivscroll-1.3-min.js"></script>
+    <script type="text/javascript" src="jquery-ui-1.8.23.custom.min.js"></script>
+    <script type="text/javascript" src="jquery-ui-1.10.3.custom.min.js"></script>
+    <script type="text/javascript" src="particles.js"></script>
+    <script type="text/javascript" src="20170821.js"></script>
+    <link rel="stylesheet" href="20170821.css">
+    <link rel="stylesheet" href="jquery-ui.css">
+    <link rel="stylesheet" href="smoothDivScroll.css">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#a8a8a8">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+</head>
+<body>
+<div id='particles-js'>
+</div>
+<div id='container'>
+  
+  <div id='containerpadding'>
+    <form id='form'>
+    <div id='content'>
+    <div id='topHalf'>
+    
+    <input type='hidden' name='submitted' value='submitted' />
+    <div id='infoBar'>
+    <div><b>Learn More:</b> <a href='#about' onclick='document.getElementById("about").style.display="block"; setURL("#about"); jQuery("html,body").animate({scrollTop: jQuery("#about").offset().top}, 1000); return false;'>What is The World Exchange?</a></div>
+    </div>
+    <div id='navigation'>
+    <span id='yourAccount' style='display:none;'>Your Account: <input id='account' type='text' readonly='readonly' value='<?php if(isset($_REQUEST['account'])) echo $_REQUEST['account']; ?>' placeholder='Enter your account address here...' /></span><span id='welcome'>Welcome, <a href='#' onclick='showLogin();'>Login or Create a Ripple Account</a></span>
+    </div>
+    
+    <!--<div id='tutorials'>
+      <div id='tutorialsHeader'><a href='https://www.youtube.com/channel/UChSbx9PDkOabNEdutCu-V-Q' target='_blank'>Video Tutorials</a>:</div>
+      <tr><td><ul>
+      <li><a href='https://www.youtube.com/watch?v=jxdsKYUW4OE&list=PLHAK7FXoElZOyM6MaQ_O_i6ATap2k9r-o&index=1' target='_blank'>Create an Account and Login</a></li>
+      <li><a href='https://www.youtube.com/watch?v=Mwxtw0lAJ50&list=PLHAK7FXoElZOyM6MaQ_O_i6ATap2k9r-o&index=2' target='_blank'>Fund and Activate</a></li>
+      </ul>
+      <ul id='loggedInTutorials'>
+      <li><a href='https://www.youtube.com/watch?v=RTKVvY3VIZg&list=PLHAK7FXoElZOyM6MaQ_O_i6ATap2k9r-o&index=3' target='_blank'>Buy and Sell</a></li>
+      <li><a href='https://www.youtube.com/watch?v=n5n7hap0kT4&list=PLHAK7FXoElZOyM6MaQ_O_i6ATap2k9r-o&index=4' target='_blank'>Send to Other Accounts</a></li>
+      </ul>
+    </div>-->
+    
+    <div id='subnavigation'>
+    <table>
+    <tr><td><div id='balanceLabel' style='visibility:hidden; display:none;'>Balance:</div></td><td><div id='balance' style='display:none;'></div></td></tr>
+    <tr><td><div id='ordersLabel' style='visibility:hidden; display:none;'>Orders:</div></td><td><div id='orders' style='float:right;'></div></td></tr>
+    <tr><td colspan='2'>
+    <div id='controlMiscMenu'>
+      <a id='showMiscMenu' href='#' onclick='showMiscMenu();'> + + + Show Menu + + + </a>
+      <a id='hideMiscMenu' href='#' style='display:none;' onclick='hideMiscMenu();'> - - - Hide Menu - - - </a>
+    </div>
+    <div id='miscMenu' style='clear:right;'>
+    
+    <div id='tutorialsHeader' style='display:none;'><a href='https://www.youtube.com/channel/UChSbx9PDkOabNEdutCu-V-Q' target='_blank'>Video Tutorials</a></div>
+    <div id='chatHide' style='display:none;'><a href='#' onclick='hideChatbox();'>Hide Chat</a></div>
+    <div id='chatShow' style='display:none;'><a  href='#' onclick='showChatbox();'>Show Chat</a></div>
+    </div>
+    </td></tr>
+    </table>
+    </div>
+    
+    <div id='chatbox' style='display:none;'>
+      <div id='chatHistory'>
+        <div id='chatHistoryAnnouncement'>
+        Welcome to The World Exchange Chat Box, run entirely decentralized via blockchain! All messages are recorded forever, timestamped, unchangeable, and visible to anyone. It doubles as blockchain notary for indisputable proof you said something. Each message costs <span id='feeAnnouncement'>0.000012</span> XRP ($<span id='feeDollar'>0.000003</span>) for min. network fee + transaction but nothing more.<br /><hr />
+        </div>
+        <div id='chatHistoryContents'>
+        
+        </div>
+      </div>
+      <div id='chatControls'>
+      <input id='chatMessage' name='chatMessage' type='text' value='' placeholder='Enter chat to send.' autocomplete="off" /> <input id='sendChat' name='sendChat' type='submit' />
+      </div>
+    </div>
+    
+    <div id='loginBackground' style='display:none;'>
+    </div>
+
+    <div id='login' class='popup' style='display:none;'>
+      <div id='loginContents'>
+        <h3>Login to Your Ripple Account</h3>
+        <div class='settings'>
+        <table>
+        <tr><td style='text-align:left;'>Your Account Address:</td><td style='text-align:right;' class='right'><input id='accountInput' type='text' value='<?php if(isset($_REQUEST['account'])) echo $_REQUEST['account']; ?>' placeholder='Can be left blank if you have secret key.' onclick="this.select();" /></td></tr>
+        <tr><td style='text-align:left;'>Your Secret Key:</td><td style='text-align:right;' class='right'><input id='keyInput' type='text' value='<?php if(isset($_REQUEST['account'])) echo $_REQUEST['account']; ?>' placeholder='Can be left blank for read-only mode.' autocomplete='off' onclick="this.select();" /></td></tr>
+        </table>
+        </div>
+        <div><input id='loginSubmit' name='loginSubmit' type='submit' value='Login' /><input id='cancelLogin' name='cancelLogin' type='submit' value='Cancel' /><input id='logoutSubmit' name='logoutSubmit' type='submit' value='Logout' /></div>
+        <div> - or - </div>
+        <div id='newAccountField'><input id='newAccountSubmit' name='newAccountSubmit' type='submit' value='Create New Account' /></div>
+        <div id='loginDisclaimer' class='disclaimer'><b>Important/Disclaimer:</b> Make sure to <span style='font-weight:bold; text-decoration:underline;'>save your address and secret key.</span>  Share your address to receive from others, but <b>never</b> share your secret key with anyone.  Your secret key is essentially your password.  This site does not process or save any information and is not responsible for your account or your transactions; everything goes directly between you and the global decentralized <a href='https://en.wikipedia.org/wiki/Ripple_(payment_protocol)' target='_blank'>Ripple</a> network, which no one controls.  <b>The site is an exchange in name only.  Nothing flows through the site itself.</b>  The site is provided as is, and you agree by using this site that you cannot hold The World Exchange, its creators, or its operators responsible or liable for any actions or consequences in relation to it.  For the tech savy, the site is a free, purely client-side wallet, the most secure way to access any blockchain network.  All transactions are signed locally on your device, and no private or secret keys are ever sent to any server.  If you save this webpage, you can continue to access the <a href='https://en.wikipedia.org/wiki/Ripple_(payment_protocol)' target='_blank'>Ripple</a> network even if our servers go down because everything runs from your device only.  You can even disconnect from the internet completely and still generate new account addresses (aka paper wallet / <a href='http://bitcoin.stackexchange.com/questions/30773/how-can-an-online-wallet-be-more-secure-than-paper-wallets-or-cold-storages' target='_blank'>cold wallet</a>).  The site is literally not doing anything other than offering the page for download.<br />
+        <hr />
+        <b>Legal / Terms of Use:</b><br />
+        <br />The terms of use and agreement provided below (the "Agreement") is a binding agreement between the end user ("you") and the operator of the website, Autodidactic FinTech LLC (the "operator" or "operators").  If you are entering into this Agreement on behalf of a company or other legal entity, you represent that you have the authority to bind such entity to these terms and conditions, in which case the term “you” shall refer to such entity.
+        <br /><br />Copyright © 2016 WorldX LLC All Rights Reserved
+        <br /><br />This site is created by <a href='https://www.pftq.com/blabberbox/?page=The_True_Potential_of_Ripple_and_XRP' target='_blank'>pftq</a> (the "creator" or "creators"), who remains the sole owner of all rights and IP through the holding company WorldX LLC.  The operator, Autodidactic FinTech LLC, is an affiliate entity to the brand and umbrella group <a href='https://www.autodidactic.ai' target='_blank'>Autodidactic I</a>.  The operator holds a license to operate, publish, and distribute The World Exchange website (the "site") and is responsible for all related business and legal representation.  The site acts as and is only a user-interface to <a href='https://www.ripple.com/' target='_blank'>Ripple</a>, an open-source, distributed ledger technology built by Ripple Labs.  Ripple, Ripple Labs, and its token currency XRP are unaffiliated with the creators or operators of The World Exchange.  While the The World Exchange website code is open-source and free to build from for your own projects, The World Exchange itself, the documentation, and the names and designs shown are copyrighted with all rights reserved.  You acknowledge and agree that The World Exchange is provided to you under license to use only and not sold to you. You do not acquire any ownership interest in The World Exchange or any other rights thereto other than to use The World Exchange, and subject to all terms and conditions described above.<br />
+        <br />BY DOWNLOADING, INSTALLING OR USING THE WORLD EXCHANGE WEBSITE, YOU REPRESENT AND WARRANT THAT (A) YOU HAVE READ AND UNDERSTAND THIS AGREEMENT; (B) YOU ARE 18 YEARS OF AGE OR OLDER; (C) YOU HAVE THE FULL POWER AND AUTHORITY TO AGREE TO THIS AGREEMENT; (D) YOU ARE NOT LOCATED IN, UNDER THE CONTROL OF, OR A NATIONAL OR RESIDENT OF ANY COUNTRY SUBJECT TO SANCTIONS BY THE UNITED STATES; (E) YOU HAVE NOT BEEN PLACED ON THE U.S. DEPARTMENT OF COMMERCE’S DENIED PERSONS LIST; (F) YOU ARE NOT IDENTIFIED AS A “SPECIALLY DESIGNATED NATIONAL” BY THE UNITED STATES GOVERNMENT; AND (G) YOU WILL NOT USE THE WORLD EXCHANGE WEBSITE IF YOU HAVE PREVIOUSLY BEEN PROHIBITED FROM DOING SO OR IF ANY LAWS PROHIBIT YOU FROM DOING SO.<br />
+        <br />THE WEBSITE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.<br />
+        <br />NO RESPONSIBILITY OR LIABILITY. The World Exchange is not an actual exchange or even a "web wallet" for cryptocurrencies. You do not create an account or give us your funds to hold onto. All transactions are signed locally, and no private or secret keys ever leave your browser / computer. The site merely acts as a user-interface to interact with blockchain, specifically the <a href='https://en.wikipedia.org/wiki/Ripple_(payment_protocol)' target='_blank'>Ripple</a> network. You agree by using the site that you cannot and will not hold the creators or operators of The World Exchange liable for anything, whether for breach of contract, negligence or otherwise, and whether or not the creators or operators of The World Exchange were advised of the possibility of any liability you may experience<br />
+        <br />SECURITY.  The World Exchange website does not include its own encryption or other security measures, and any communications with Ripple via The World Exchange website are protected only by any security that Ripple (or other third parties) may provide.  You are responsible for your own security of your keys and transactions whether generated by this site or not.  It is your sole responsibility to ensure that all communications conducted via the World Exchange website are secure and neither The World Exchange nor its creators or operators shall have any responsibility for interception or other unauthorized access to communications conducted via The World Exchange website.  While best effort has been made to build The World Exchange in a secure manner, there is always the possibility of loss from software bugs or other security flaws that may have been overlooked, and you agree by using the site that you understand this risk and hold The World Exchange, its creators, or its operators harmless for anything that may occur.  You also acknowledge and are aware of the proliferation of computer viruses and other malware affecting the internet, and are solely responsible to scan any and all downloaded materials received from Ripple or other portions of the Internet to ensure that such viruses or other malware do not affect your computer or other IT systems.  Neither The World Exchange nor its creators or operators are not responsible or liable for any damage caused by such hazards, and The World Exchange website does not include any anti-virus or anti-malware protections to prevent such hazards.<br />
+        <br />COMPLIANCE WITH LAWS, REGULATIONS, and TAXATION RULES. You are solely responsible for abiding by the laws, regulatory requirements, and taxation rules of your jurisdiction for what you choose to do with The World Exchange, including Securities laws and regulations.  Tokens on the platform may be subject to taxation rules depending on local and federal laws, which you are solely repsonsible for knowing.  Any violations of the laws are liable to you, the end user, only and will not be the responsibility of The World Exchange, its creators, or its operators.  Lastly, you acknowledge that there is substantial legal and regulatory risk in dealing with blockchain-based tokens, as the landscape for such technologies is constantly evolving, and this risk is similarly solely your own responsibility.  Should you be unsure of the legality or regulatory requirements of your intended use of The World Exchange, you should immediately stop all use and first consult an attorney or legal counsel.<br />
+        <br />INDEMNIFICATION.  You agree to indemnify, defend and hold harmless the creators and operators of The World Exchange and their affiliates, their licensors, and the officers, directors, employees, agents, affiliates, service providers, successors and assigns of the foregoing from and against any and all losses, damages, liabilities, deficiencies, claims, actions, judgments, settlements, interest, awards, penalties, fines, costs, or expenses of whatever kind, including reasonable attorneys’ fees, arising from or relating to your use or misuse of The World Exchange.
+        <br /><br />NO INVESTMENT ADVICE.  You agree that to the extent you purchase tokens or other assets via Ripple, the seller of such tokens or assets is solely responsible for creating or providing all information and/or documentation relevant and necessary to assess and execute the purchase of such tokens or assets (including without limitation any document describing the tokens or assets (sometimes referred to as a “whitepaper”) and any contract memorializing such purchase of tokens or assets) and that The World Exchange does not, and neither The World Exchange nor its creators or operators have any responsibility or obligation to do so.	You understand that The World Exchange, its creators, and its operators provide no transaction or investment advice of any kind, nor do The World Exchange, its creators, or its operators give advice or offer any opinion with respect to the nature, potential value or suitability of any particular transaction or investment strategy. You understand that you are solely responsible for all transaction and investment decisions you make using The World Exchange. You further understand that while you may be able to access market data and other financial information using The World Exchange, the availability of such information does not constitute a recommendation to buy or sell anything or to engage in any investment strategy. Any transactions you conduct or investment decisions you make will be based solely on your own evaluation of your financial circumstances and investment objectives and the suitability for you of any asset or any investment strategy. Any transaction conducted by you or using your login credentials is yours and you are responsible for any outcome resulting from transactions that you initiate or that are initiated by any third party using your login credentials, including the possible loss of principal invested based on an investment decision. You understand the risks involved with transacting via Ripple and that investments in tokens and other assets will fluctuate in value, and you agree that neither The World Exchange nor its creators or operators are responsible for any losses you may incur as a result of your investment decisions or any transactions that you may conduct using The World Exchange website.  All investments and other transactions have risks, and you are responsible for determining whether you can afford the risks of making any investment or other transaction.
+        <br /><br />GOVERNING LAW.  This agreement and terms of use shall be governed in all respects by the substantive laws of the State of New York, without regard to the conflicts of laws principles of any jurisdiction.  You agree to submit to the personal and exclusive jurisdiction and venue of the state and federal courts located within New York County.
+        <br /><br />ASSIGNMENT.  You may not assign this Agreement, in whole or in part. The creators and operators may freely assign this agreement, in whole or in part, at any time in their sole discretion.  Subject to the foregoing, this Agreement is binding upon, inures to the benefit of and is enforceable by the Parties and their respective successors and assigns.  Any assignment or purported assignment in violation of this shall be void and of no effect.
+        <br /><br />ENTIRE AGREEMENT.  This Agreement constitutes the entire agreement between you and the creators and operators of The World Exchange with respect to the World Exchange website, and supersedes all prior or contemporaneous understandings and agreements, whether written or oral, with respect thereto.
+        </div>
+        <div id='disclaimerAgreement'><input type='checkbox' name='disclaimerRead' id='disclaimerRead' /> I have read, understand, and agree to the above.</div>
+      </div>
+    </div>
+    
+    <div id='backer' class='popup' style='display:none;'>
+      <div id='backerContents'>
+        <h3>Choose the Issuer/Backer for <span id='symbolToBeBacked'> </span>...</h3>
+        <div class='settings issuerSettings'>
+        <table>
+        <tr><td style='text-align:left;'>Choose from Known Issuers:</td><td style='text-align:right;' class='right'><select id='issuerList'><option value=''>-- None --</option></select></td></tr>
+        <tr><td style='text-align:left;'>Or Enter Issuer's Address:</td><td style='text-align:right;' class='right'><input id='issuerInput' type='text' value='' placeholder='Enter issuer address...' onclick="this.select();" /></td></tr>
+        </table>
+        </div>
+        <div><input id='backerSubmit1' name='backerSubmit1' type='submit' value='Submit' /><input id='backerSubmit2' name='backerSubmit2' type='submit' value='Submit' /><input id='cancelBacker' name='cancelBacker' type='submit' value='Cancel' /></div>
+        <div id='issuerInfo' class='disclaimer'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Every token traded is issued/created by someone else out there, whether it be a person issuing tokens to represent personal loans/debt and credit or a company issuing tokens to represent their bonds and equity.  Or it could represent something completely different and unheard of - such as new currencies or tokens to represent ideas, projects, anything.  It is being able to fundraise for anything and create a fully tradable token to represent it.
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Anyone can create their own tokens by issuing them; it's on you to communicate to the world what the tokens represent and to enforce that.  Think of it like creating a credit card; it's not cash but the creator of the card enforces the value.  In the case of peer-to-peer lending, one can create a token for others to buy with the creator's promise to buy back the token later, just like the concept of getting a loan and paying it back later.  The value of a token here will always be determined by how much everyone trusts the creator to back it, just like how anything else works in the real world.
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Once you create your own token, you can then tell others to buy or sell it by directing them to this site and giving them the name of the token and your account address as the backer/issuer.  Your token will be traded just like any other token that exists on the exchange with its value determined completely by the free market.
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thanks to Ripple's autobridging technology, a token offered for Ripple's native currency XRP will automatically be offered on every orderbook that exists.  For example, if you offer XYZ for XRP, everyone will automatically see XYZ also available for USD, EUR, BTC, etc, simultaneously every form of exchange and creating immediate liquidity.  You can always still offer directly to one symbol such as USD if you do not wish to make it available universally.</div>
+      </div>
+    </div>
+    
+    <div id='trustlines' class='popup' style='display:none;'>
+      <div id='trustlinesContents'>
+        <h3 id='trustlinesTitle'>Set Receivable Tokens...</h3>
+        <div id='trustlinesBox' class='trustlineFields'>
+        <table id='trustlinesTable'>
+        <tr><td class='trustSymbol'>Symbol</td><td class='trustIssuer' id='trustlinesAddress'>Issuer</td><td class='trustLimit' id='trustlinesField'>Limit</td><td class='trustDelete'> </td></tr>
+        </table>
+        </div>
+        <div><input id='submitTrust' name='submitTrust' type='submit' value='Submit' /><input id='cancelTrust' name='cancelTrust' type='submit' value='Cancel' /><input id='submitNewTrust' name='submitNewTrust' type='submit' value='Add New Row' /></div>
+        <div id='trustlinesInfo' class='disclaimer'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Every token is issued and created by some individual, company, or organization.  Every user has the choice to decide what others are allowed to send to him/her.  Before sending anything to a recipient, make sure the recipient has set their "Receivable Tokens" to be able to accept the token you are about to send.  If you are expecting to receive a token, make sure the token and who backs it are in your "Receivable Tokens" list.  All of this is done so that you do not accidentally receive tokens backed by people/companies you do not trust or know - for example, a fake USD token issued by a scammer.  You do not need to do this for tokens you buy, sell, or issue, only for what others send you.  The special case is if an issuer requires token holders be authorized or approved; then you'll get a message that both you and the issuer need to add each other before you can buy or sell it.  The one token that does not require any of this is Ripple's native currency XRP, which no one can issue and therefore can't be faked.  Note that Ripple's <a href='https://ripple.com/build/gateway-guide/#trust-lines-and-issuances' target='_blank'>Gateway documentation</a> refers to these lists as trustlines.  A video walk-through for sending or receiving is also available on <a href='https://www.youtube.com/watch?v=n5n7hap0kT4&index=4&list=PLHAK7FXoElZOyM6MaQ_O_i6ATap2k9r-o' target='_blank'>YouTube</a> for further clarity.</div>
+        <div id='authorizedInfo' class='disclaimer' style='display:none;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You have enabled "<b>requireAuthorization</b>" in Advanced Settings.  This means only authorized accounts can buy or exchange the tokens you issue.  Add each account you wish to authorize above.  Each account you authorize must also add you and your token to their "Receivable Tokens" list as an extra precaution.<br />
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In addition, you can control whether a specific token holder is allowed to send your token to others by checking or disabling the Allow Transfer option; note this does not affect their ability to still trade on the open market.  To completely allow or disallow all sending of your token, use the defaultRipple option in Advanced Settings.<br />
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Read more about issuing and maintaining tokens at Ripple's <a href='https://ripple.com/build/gateway-guide/' target='_blank'>Gateway Guide</a>.</div>
+      </div>
+    </div>
+    
+    <div id='settings' class='popup' style='display:none;'>
+      <div id='settingsContents'>
+        <h3>Advanced Settings...</h3>
+        <div id='settingsBox' class='advancedSettings'>
+        <table id='settingsTable'>
+        <tr><td class='settingName'>Setting</td><td class='settingValue'>Value</td></tr>
+        </table>
+        </div>
+        <div><input id='submitSettings' name='submitSettings' type='submit' value='Submit' /><input id='cancelSettings' name='cancelSettings' type='submit' value='Cancel' /></div>
+        <div id='settingsInfo' class='disclaimer'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The above settings are for advanced users only.  <b><u>Be extremely careful as some settings can result in your account being unusable.</u></b>  Read about each field in the Ripple <a href='https://ripple.com/build/rippleapi/#settings' target='_blank'>API</a> and typical usage at Ripple's <a href='https://ripple.com/build/gateway-guide/' target='_blank'>Gateway</a>.  Some of the main ones are covered below.<br />
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Something that most <b>token issuers</b> (and token issuers <b><u>only</u></b>) will want to check is "<b>defaultRipple</b>."  By default, it is disabled so others can only trade the tokens you create but not send directly to others; to allow others to send your tokens as well, enable the "defaultRipple" setting for your account.  A reason you might leave this off as a token issuer is if, for example, regulations require token ownership to not be "transferred" for some period of time.  For convenience, the site asks you if you want to enable it each time you issue a token, so it is likely already enabled without you coming to the Advanced Settings window.  Note, this is for <b><u>token issuers</u></b> only; if you're not using your account to issue tokens, you should <b><u>not</u></b> enable this and in fact keep it off, as it has unintended consequences for accounts that are just buying and holding instead.<br />
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Another commonly used feature, which again is just for token issuers, is "<b>requireAuthorization</b>." Enabling it requires both the buyer and issuer to add each other under their respective "Receivable Tokens" and "Authorized Token Holders" lists before your token can be traded or received.  A demo is available <a href='https://www.theworldexchange.net/?symbol1=TTT.rBcA1MkS2jtywAAi9bWfGsUk9R6RWQAyKr&symbol2=XRP' target='_blank'>here</a>, which is publicly visible but not purchasable unless you've been given permission by the issuer.  It is essentially a whitelist of who is allowed to hold your token, whether they buy off the exchange or receive directly from someone else.  An account that uses requireAuthorization should only exist solely to issue tokens (don't use it to also buy and hold other things), and the requireAuthorization flag needs to be set before any tokens are created.  Otherwise, you will prompted to cancel all issuances and trustlines ("Receivable Tokens" list) first.  Once enabled, your "Receivable Tokens" list becomes instead an "Authorized Token Holders" list with which you designate who is allowed to hold what tokens you issue.<br />
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The third major setting is the "<b>RegularKey</b>."  Setting this field to the public address of another account allows you to also use the secret key of that other account to login.  In other words, you can now login using either of two secret keys (passwords) instead of one.  The main secret key you start with is known as the "MasterKey" and is unchangeable, but a "RegularKey" can be changed constantly.  Some users feel better protected if their main, unchangeable "MasterKey" is rarely used, and setting a "RegularKey" essentially lets them use what is otherwise a disposable password for the majority of the time.  Another use case might be delegating access to your account to another user, who you want to maintain the ability to cut off, such as with a large company.  An additional setting "disableMasterKey" is also available should you wish to only use the RegularKey going forward, but be careful as you can permanently lock out your account if you both disable the MasterKey and set the RegularKey to an account you don't have the secret key to.<br />
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Most other options above should be self-explanatory or covered well enough by the Ripple documentation linked above.  The main purpose of features like this is to allow more tightly regulated businesses to integrate their KYC/AML needs directly into the token without additional code or smart contracts.  If there are any questions, feel free reach out to <a href='mailto:contact@theworldexchange.net' target='_blank'>contact@theworldexchange.net</a>.</div>
+      </div>
+    </div>
+    
+    <div id='popup' class='popup' style='display:none;'>
+      <div id='popupContents'>
+        <h3 id='popupHeader'>Info</h3>
+        <div id='popupText' class='info'></div>
+        <div><input id='okPopup' name='okPopup' type='submit' value='Okay' /></div>
+      </div>
+    </div>
+    
+    <div id='sendOptionsWindow' class='popup' style='display:none;'>
+      <div id='sendOptionsContents'>
+        <h3>Set Optional Fields to Transaction...</h3>
+        <div>
+        <table>
+        <tr><td style='text-align:left;'>Destination Tag:</td><td style='text-align:right;' class='right'><input id='destinationTagInput' type='number' min='0' step='1' value='' placeholder='Integer number note to include...' onclick="this.select();" /></td></tr>
+        <tr><td style='text-align:left;'>Memo:</td><td style='text-align:right;' class='right'><input id='memoInput' type='text' value='' placeholder='Text note to include...' onclick="this.select();" /></td></tr>
+        </table>
+        
+        </div>
+        <div><input id='sendOptionsSubmit' name='sendOptionsSubmit' type='submit' value='Submit' /><input id='sendOptionsCancel' name='sendOptionsCancel' type='submit' value='Cancel' /></div>
+        <div id='sendOptionsInfo' class='disclaimer'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The destination tag and memo are optional notes you can attach to your transaction.  The destination tag is usually asked for to send your transaction with things like an order id, account number, etc.  The main usage is if the recipient shares their account with multiple people, such as a bank managing for many customers; the destination tag then helps make note of who specifically this transaction is for.  The memo is a note can be any sort of text.  Both are completely optional.</div>
+      </div>
+    </div>
+    
+    <div id='header'>
+    <h1>The World Exchange</h1>
+    
+    <h2>Trade, Issue, and Send Anything Anywhere in Real Time</h2>
+    
+    <!--
+    <div id='scrollingText'>
+      <p><a href='#instant' onclick='document.getElementById("about").style.display="block"; setURL("#represent"); jQuery("html,body").animate({scrollTop: jQuery("#instant").offset().top}, 1000); return false;'>Buy and Sell Anything</a></p>
+      <p><a href='#represent' onclick='document.getElementById("about").style.display="block"; setURL("#represent"); jQuery("html,body").animate({scrollTop: jQuery("#represent").offset().top}, 1000); return false;'>Issue Your Own Symbols</a></p>
+      <p><a href='#instant' onclick='document.getElementById("about").style.display="block"; setURL("#represent"); jQuery("html,body").animate({scrollTop: jQuery("#instant").offset().top}, 1000); return false;'>Send Money to Anyone</a></p>
+      <p><a href='#represent' onclick='document.getElementById("about").style.display="block"; setURL("#represent"); jQuery("html,body").animate({scrollTop: jQuery("#represent").offset().top}, 1000); return false;'>Crowdfund Any Project</a></p>
+      <p><a href='#represent' onclick='document.getElementById("about").style.display="block"; setURL("#represent"); jQuery("html,body").animate({scrollTop: jQuery("#represent").offset().top}, 1000); return false;'>Peer-to-Peer Lending</a></p>
+      <p><a href='#represent' onclick='document.getElementById("about").style.display="block"; setURL("#represent"); jQuery("html,body").animate({scrollTop: jQuery("#represent").offset().top}, 1000); return false;'>Crowdsourced Credit Rating</a></p>
+      <p><a href='#represent' onclick='document.getElementById("about").style.display="block"; setURL("#represent"); jQuery("html,body").animate({scrollTop: jQuery("#represent").offset().top}, 1000); return false;'>Fundraise for Any Company</a></p>
+      <p><a href='#represent' onclick='document.getElementById("about").style.display="block"; setURL("#represent"); jQuery("html,body").animate({scrollTop: jQuery("#represent").offset().top}, 1000); return false;'>Issue Debt or IPO</a></p>
+      <p><a href='#represent' onclick='document.getElementById("about").style.display="block"; setURL("#represent"); jQuery("html,body").animate({scrollTop: jQuery("#represent").offset().top}, 1000); return false;'>Automate Your Audit Trail</a></p>
+      <p><a href='#represent' onclick='document.getElementById("about").style.display="block"; setURL("#represent"); jQuery("html,body").animate({scrollTop: jQuery("#represent").offset().top}, 1000); return false;'>Offer Your Own Gift Cards</a></p>
+      <p><a href='#represent' onclick='document.getElementById("about").style.display="block"; setURL("#represent"); jQuery("html,body").animate({scrollTop: jQuery("#represent").offset().top}, 1000); return false;'>Create Your Own Currency</a></p>
+      <p><a href='#represent' onclick='document.getElementById("about").style.display="block"; setURL("#represent"); jQuery("html,body").animate({scrollTop: jQuery("#represent").offset().top}, 1000); return false;'>Launch an ICO / ITO</a></p>
+    </div>
+    -->
+    </div>
+    
+    </div>
+
+        
+        <div id='trade'>
+          <div style='width:100%;'>
+          <select id='action' name='action'>
+            <option value='buy' <?php if(isset($_REQUEST['action'])&& $_REQUEST['action']=='buy') echo "selected='selected'"; ?>>Buy</option>
+            <option value='sell' <?php if(isset($_REQUEST['action'])&& $_REQUEST['action']=='sell') echo "selected='selected'"; ?>>Sell</option>
+            <option value='issue' <?php if(isset($_REQUEST['action'])&& $_REQUEST['action']=='issue') echo "selected='selected'"; ?>>Issue</option>
+            <option value='send' <?php if(isset($_REQUEST['action'])&& $_REQUEST['action']=='send') echo "selected='selected'"; ?>>Send</option>
+          </select>
+          <input type='number' min='0' step="0.00000001" class='qty' id='qty1' name='qty1' value='<?php if(isset($_REQUEST['qty1'])) echo $_REQUEST['qty1']; ?>' placeholder='Qty' />
+          <input type='text' class='symbol' id='symbol1' name='symbol1' value='<?php if(isset($_REQUEST['symbol1'])) echo $_REQUEST['symbol1']; else echo "XRP"; ?>' placeholder='Symbol' onclick="this.select();" />
+          
+          <span id='counterparty'>
+            @
+            <input type='number' min='0' step="0.00000001" class='qty' id='price' name='price' value='<?php if(isset($_REQUEST['price'])) echo $_REQUEST['price']; ?>' placeholder='Price' />
+            <input type='text' class='symbol' id='symbol2' name='symbol2' value='<?php if(isset($_REQUEST['symbol2'])) echo $_REQUEST['symbol2']; else echo "USD"; ?>' placeholder='Symbol' onclick="this.select();" />
+            
+          </span>
+          <span id='recipientField' style='display:none;'>
+            to
+            <input type='text' class='recipient' id='recipient' name='recipient' value='<?php if(isset($_REQUEST['recipient'])) echo $_REQUEST['recipient']; ?>' placeholder='Recipient Address' onclick="this.select();" />
+          </span>
+          <input type='submit' id='submit' name='submit' value='Submit' />
+          </div>
+          <div style='width:100%; margin:0px; padding:0px;'>
+              <div class='issuerLabels' id='issuer1Label' style='width:49%; float:left; text-align:right; visibility:hidden; margin:auto; '>
+                Backed by <span id='issuer1'> </span>
+              </div>
+              <div class='issuerLabels' id='issuer2Label' style='width:50%; text-align:right; visibility:hidden; margin-left:auto; '>
+                <div id='issuer2Width' style='width:30%; text-align:right;'>
+                <div style='padding-right:5%;'>
+                <div id='backedby2'>Backed by <span id='issuer2'> </span></div>
+                <div id='sendOptionsLabel' style='display:none;'><span id='destTagDisplay'>Dest. Tag: <span id='currentDestinationTag'>None</span> | </span><a href='#' onclick='showSendOptions();'>Set Optional Fields</a></div>
+                </div>
+                </div>
+              </div>
+          </div>
+        </div>
+        <div id='errors'> Warning: Javascript not detected in your browser. This site will not function without it.<br />Please check your settings or upgrade your browser. </div>
+        <div id='orderbook'>
+        
+        </div>
+     </div>
+      <div id='footer'>
+      <div>© 2016 <a href='/'>WorldX LLC</a> | <a target='_blank' href='mailto:contact@theworldexchange.net'>Contact@TheWorldExchange.Net</a> | Follow: <a target='_blank' href='https://twitter.com/WorldExchangeX'>@WorldExchangeX</a></div>
+      <div>A Free Fully Client-Side Wallet and Decentralized Exchange Showcasing What's Possible with Blockchain</div>
+      <div>Created by <a href="https://www.pftq.com/blabberbox/?page=The_True_Potential_of_Ripple_and_XRP" target="_blank">pftq</a>
+       - Powered by <a target='_blank' href='https://en.wikipedia.org/wiki/Ripple_(payment_protocol)'>Ripple</a> - Open-Sourced on <a href='https://github.com/pftq/TheWorldExchange' target='_blank'>Github</a> (v.2017/08/21)</div>
+      </div>
+      
+      
+    </form>
+    </div>
+    </div>
+    
+    <div id='about' style='position:relative; top:0px; left:0px; margin-top:100px;'>
+      <div style='padding-top:80px; padding-bottom:20px;'>
+        <h3>What is The World Exchange?</h3>
+        <h4>A free, open exchange<a href='#works' style='text-decoration:none; border:0;'>*</a> where anyone can trade, issue, and send anything anywhere in real time.</h4>
+        
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Imagine being able to send money, credit, assets - any form of ownership or value - to anyone anywhere in the world in mere seconds.  Then imagine being able to trade or bid on those same items online with anyone else without having to trust someone in between.  And finally imagine being able to actually issue your <i>own</i> symbols as well to represent anything you can think of - and then let people send or trade that just as openly as they trade anything else, its value determined completely by the free market.  That's what The World Exchange is, and it does this by using the <a href='https://en.wikipedia.org/wiki/Ripple_(payment_protocol)' target='_blank'>Ripple</a> protocol - a technology that allows for truly decentralized exchanges with no downtime and no middlemen in control of your funds.</p>
+          
+          <h5 id='instant'><a href='#instant' style='text-decoration:none; border:0;'>Instantaneous Transactions and Automatic Conversion</a></h5>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Say goodbye to ACH, bank wires, SWIFT, T+2 settlement, and other slow 20th century financial technologies.  Money and virtually any other asset can now be sent instantly anywhere in the world, and unlike Bitcoin or other blockchain-based technologies, you never have to deal with any currency other than the one you're using.  Everything is automatically and seamlessly converted in between without anyone ever having to see it.  If you offer something in exchange for USD, others can automatically buy it with EUR, BTC, XRP, and any other denomination as well.  They can even buy it directly with another asset XYZ that isn't money to begin with.  Shares can be exchanged directly for other shares, commodities for loans, private equity for bonds, etc.  All the liquidity and conversion is done behind the scenes, so all markets for every symbol out there is essentially on one global, interconnected orderbook.  You can now send and trade pure value in real-time.  Best of all, everything is automatically recorded and publicly auditable by anyone with no work on your end.</p>
+          
+
+          <h5 id='represent'><a href='#represent' style='text-decoration:none; border:0;'>Issue Tokens to Represent Any Form of Value or Ownership</a></h5>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Instantaneous transactions are amazing but you can do so much more than just send or trade quickly.  You can also create your own symbols to represent anything you want.  The common phrase for this now is issuing your own token.  And unlike other blockchain platforms, everything here is just point and click.  There is no coding or smart contracts and no need to run any infrastructure or servers.  By just hitting the <a href='#' onclick='setURL("?action=issue"); $("#action").val("issue"); $("#symbol1").val(""); $("#symbol2").val(""); updateAction(); jQuery("html,body").animate({scrollTop: jQuery("#container").offset().top}, 1000); return false;'>Issue</a> button, you can create tokens to:</p>
+          <ul>
+          <li>Represent your company, its shares, or debt - aka, an IPO / ITO / ICO or bond offering.</li>
+          <li>Represent yourself - aka your credit completely crowdsourced and lending done peer-to-peer.</li>
+          <li>Fundraise for an idea, project, or cause - aka crowdfunding or sponsorship.</li>
+          <li>Offer rewards, gift cards, game currencies - anything redeemable in real world.</li>
+          <li>Store information permanently - audit trails, notary, archives, the chat on this very site.</li>
+          </ul>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;And pretty much anything else you can think of.  The whole process literally takes less than a minute (see <a href='https://www.youtube.com/watch?v=Uh4uOVUz42Q&list=PLHAK7FXoElZOyM6MaQ_O_i6ATap2k9r-o&index=6' target='_blank'>video walk-through</a>).  The token is then openly tradable by anyone with its price determined entirely by the free market, just like with any stock, bond, currency, etc.  And thanks to the automatic conversion behind the scenes, you only need to offer it once to automatically offer across every symbol there is, instantly accepting any form of exchange without additional effort.  You can see this yourself with a live example TTT, which is offered only once for XRP <a href='https://www.theworldexchange.net/?symbol1=TTT.rBcA1MkS2jtywAAi9bWfGsUk9R6RWQAyKr&symbol2=XRP' target='_blank'>here</a> but automatically also available across <a href='https://www.theworldexchange.net/?symbol1=TTT.rBcA1MkS2jtywAAi9bWfGsUk9R6RWQAyKr&symbol2=USD' target='_blank'>USD</a>, <a href='https://www.theworldexchange.net/?symbol1=TTT.rBcA1MkS2jtywAAi9bWfGsUk9R6RWQAyKr&symbol2=EUR' target='_blank'>EUR</a>, and <a href='https://www.theworldexchange.net/?symbol1=TTT.rBcA1MkS2jtywAAi9bWfGsUk9R6RWQAyKr&symbol2=BTC' target='_blank'>BTC</a>.</p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;At some point, you would either buy back the token you issued or offer some other form of exchange/reward/redemption to give it value.  The trust that you do that is why people would buy or accept your token in the real world.  It is your job to enforce and communicate that promise.  It is no different than a credit card issued by a bank, a gift card issued by a store, someone buying a stock on the trust that the company makes money for its shareholders, or a loan being offered on the trust that the borrower pays it back with interest.  Those that break that trust would find it difficult to do business in the future, just like with anything else in the real world.  The most important part is that every transaction on the exchange is permanent and there for all to see, so no one can ever lie and get away with it.</p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: The site here only takes care of the technology side. For creating an actual token sale (ICO / ITO) or other serious projects, make sure to also see <a href='#ico' onclick='setURL("#ico"); jQuery("html,body").animate({scrollTop: jQuery("#ico").offset().top}, 1000); return false;'>How to Create a Token Offering (ICO / ITO)</a>, where we cover business/legal considerations, built-in compliance features you can configure, etc in addition to just issuing the token itself.</p>
+          
+          <h5 id='global'><a href='#global' style='text-decoration:none; border:0;'>Global and Decentralized - No Middlemen and No Downtime</a></h5>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The best part of all this is everything can be done in the same place, the same "exchange."  In actuality, <b>The World Exchange is not really a place or even an exchange.</b>  It is only an interface to a global, decentralized network that already exists, distributed across the world the same way the internet is.  That network is the <a href='https://en.wikipedia.org/wiki/Ripple_(payment_protocol)' target='_blank'>Ripple</a> consensus ledger, one of many competing blockchain-based technologies, and like the internet, it is everywhere and controlled by no one person.  The World Exchange is but a mere internet service provider connecting you to it.  <b>Nothing is stored or run through The World Exchange site itself.</b>  Everything runs off of the blockchain itself with no middlemen or intermediaries.  As long as you save your account address and secret key, your account is safe even if this site goes down.  You don't actually even need this site to trade and keep using your account.  In fact, you can save this page to your computer, have your firewall block theworldexchange.net, and still access your account with full functionality.  You can even disconnect your computer from the internet completely and just create an address to deposit funds into (aka a paper wallet / <a href='http://bitcoin.stackexchange.com/questions/30773/how-can-an-online-wallet-be-more-secure-than-paper-wallets-or-cold-storages' target='_blank'>cold wallet</a>).  The site literally doesn't do anything other than offer you the webpage for download.  In addition, there is <b>no downtime ever</b> because there is no actual exchange to overload, and there is <b>no data to be lost to any security breaches</b> because no data is actually passed through or stored on the site in the first place.  This is an exchange in name only that allows anyone can trade or transact with other users directly with no one else in between, and like the internet, this "exchange" is forever online as long as there are other users just like yourself.</p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is the way a truly decentralized exchange should be.  Unfortunately, a lot of exchanges out there that advertise or even use blockchain are not actually decentralized at all.  They control your accounts, store your passwords/keys, are a central point of failure that loses everyone's funds if they get hacked, etc.  Such exchanges are literally just traditional exchanges which happen to trade cryptocurrencies and are not actually leveraging the technology behind blockchain at all.  The horror stories with Mt. Gox, Bitfinex - where users have lost money to hacks, crashes of the exchange, etc - all occur on these kinds of traditional, centralized exchanges.  It's like someone trying to sell you a self-driving car but insisting you still pay them to be your driver.  They do this so they can charge you the same fees as the older technology, while keeping all the cost savings of new technology to themselves.  Imagine if you paid a driver who just pushed the on button for the self-driving car.  A truly decentralized exchange would make the traditional exchange obsolete.  Such is the case with The World Exchange, which really is not an exchange at all but just an interface to an already existing decentralized exchange network (aka blockchain); the one we use here is called <a href='https://en.wikipedia.org/wiki/Ripple_(payment_protocol)' target='_blank'>Ripple</a> and is one of many competing technologies against the original Bitcoin-based blockchain.  More tech-savvy users will understand this to be a <b>fully client-side wallet</b>, where your account credentials remain in your control at all times and are never sent anywhere.  It is the <b>most secure way to store and access funds</b>, quite literally because you never give your information to anyone else to begin with.  This is the way a truly decentralized exchange should be, and the purpose of this site is to demonstrate that it is very much possible and already here with today's technology.</p>
+          
+          
+          <h5 id='started'><a href='#started' style='text-decoration:none; border:0;'>How to Get Started</a></h5>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The quickest way to get started is to create an account on the Login page or use an existing Ripple address if you have one.  Those who have created addresses or wallets at other Ripple-based sites, such as <a href='http://www.rippletrade.com/' target='_blank'>RippleTrade</a> or <a href='https://www.gatehub.net/' target='_blank'>Gatehub</a>, will be able to use the exact same account and secret keys here because it's the same Ripple network behind the scenes.  More step-by-step video tutorials on account creation, funding, and other actions are also available on <a href='https://www.youtube.com/playlist?list=PLHAK7FXoElZOyM6MaQ_O_i6ATap2k9r-o' target='_blank'>YouTube</a>.</p>
+          <p id='started_minXRP'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><a href='#started_minXRP' style='text-decoration:none; border:0;'>Min XRP and Transaction Fee</a></b>: After creating an account, the account requires a <a href='https://ripple.com/build/reserves/' target='_blank'>minimum amount of XRP</a> to be activated.  XRP is the native currency on the Ripple network with no issuer or backer.  The starting minimum is 20 XRP, with each additional type of token you want to hold and each open order requiring an additional 5 XRP minimum.  For example, if you want to trade both USD and EUR, you would need a minimum 30 XRP (20 base + 5 per symbol).  If you then place an order, that increases by another 5 until the order is filled or cancelled.  This is all done to prevent spam and other issues.  In addition, while the technology is free, a small fraction of XRP is burned each time a transaction happens, so bad actors cannot flood the network with fake or meaningless orders.  It is not an amount paid out to someone and is part of the Ripple protocol itself (see <a href='https://ripple.com/build/rippleapi/#transaction-fees' target='_blank'>Ripple transaction fees).</a></p>
+          <p id='started_funding'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><a href='#started_funding' style='text-decoration:none; border:0;'>Funding an Account</a></b>: The easiest way to fund your account is to use a Ripple activation service like <a href="https://www.bithomp.com/activation/" target="_blank">Bithomp</a>, which allows you to buy XRP with traditional payment methods like PayPal to fund your newly created account.  Beyond that, you would go to the issuers themselves like <a href='https://www.bitstamp.net' target='_blank'>Bitstamp</a> or <a href='https://www.gatehub.net/' target='_blank'>Gatehub</a>, who as described more below will exchange and redeem any token they back on the Ripple network for real-world currencies (including USD and EUR).  Specifically, you would be looking for exchanges or firms that allow withdrawal or deposit via Ripple (which The World Exchange runs on); you'll know when you see a Ripple address for deposit or withdrawal of currencies and other tickers.  Lastly, you can go to cryptocurrency exchanges like <a href="https://www.poloniex.com/" target="_blank">Poloniex</a> or <a href='https://www.kraken.com/' target='_blank'>Kraken</a> to buy XRP before sending it to your new account, but note they can only send and receive XRP from the Ripple Network because they don't issue or back any tokens (they are just traditional exchanges).  Once you have something in your Ripple account though, you can trade it for any other token on the Ripple network using a site like this one.  A list of other sites and how to use them can be found on Ripple's <a href='https://ripple.com/xrp/buy-xrp/' target='_blank'>How to Buy XRP</a> page.  A video walk-through is also available on <a href='https://www.youtube.com/watch?v=BgCKwaSg1kk&index=2&list=PLHAK7FXoElZOyM6MaQ_O_i6ATap2k9r-o' target='_blank'>YouTube</a>.</p>
+          <p id='started_issuers'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><a href='#started_issuers' style='text-decoration:none; border:0;'>Tokens and Issuers</a></b>: All tokens except XRP are issued by someone or some company.  Their value is dependent on people's trust that whoever created the token will redeem or do other things to maintain the value; for example, if some bank issues the token XYZ to represent actual USD, they should be willing to redeem you in real cash if you send the token back to them.  It's like credit cards from a bank or gift cards from a store, which otherwise have no value unless the issuing group maintains it.  In the meantime, you can then use the XYZ token with others that accept it as a substitute for what it represents (the cash).  The person that offers the promise to redeem is called the issuer or <a href='https://ripple.com/build/gateway-guide/' target='_blank'>Gateway</a> (in Ripple's official terms).  You can find existing known issuers for any token by typing the token symbol into The World Exchange and clicking on the <b>"Backed by ..."</b> link to browse the list (or input an issuer address manually).  If you look up any particular issuer's name, you should be able to find details on how to redeem from them or use their site to go back and forth between real-world currencies/assets and the symbols on the Ripple network.</p>
+          <p id='started_receivableTokensList'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><a href='#started_receivableTokensList' style='text-decoration:none; border:0;'>Sending and Receiving</a></b>: Buying and selling should be pretty self-explanatory (watch the video tutorial <a href='https://www.youtube.com/watch?v=RTKVvY3VIZg&list=PLHAK7FXoElZOyM6MaQ_O_i6ATap2k9r-o&index=3' target='_blank'>here</a> if you're really not sure), but sending and receiving is a little trickier.  You must explicitly allow each type of token you want to receive before anyone can send you anything.  If you are expecting someone to send you something, make sure you added the token and its issuer to your "Receivable Tokens" settings first.  Similarly, before sending to others, make sure they've also added it first to their list.  All of this is done so that you do not accidentally receive tokens backed by people/companies you do not trust or know - for example, a fake USD token issued by a scammer.  You do not need to do this for tokens you buy, sell, or issue, only for what others send you.  The special case is if an issuer requires token holders be authorized or approved; then you'll get a message that both you and the issuer need to add each other before you can buy or sell it.  The one token that does not require any of this is Ripple's native currency XRP, which no one can issue and therefore can't be faked.  Note that Ripple's <a href='https://ripple.com/build/gateway-guide/#trust-lines-and-issuances' target='_blank'>Gateway documentation</a> refers to these lists as trustlines.  A video walk-through is also available on <a href='https://www.youtube.com/watch?v=n5n7hap0kT4&index=4&list=PLHAK7FXoElZOyM6MaQ_O_i6ATap2k9r-o' target='_blank'>YouTube</a> for further clarity.</p>
+          <p id='started_Laws'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><a href='#started_Laws' style='text-decoration:none; border:0;'>Laws, Regulations, and Taxes</a></b>: One thing to keep in mind is this site is only a tool; you are responsible for how you use it and to be aware of what the law allows or doesn't allow in relation to blockchain-based technologies.  The information on this site is by no means legal or investment advice, and you are solely responsible and liable for complying with such laws and regulations in your jurisdiction.  For buyers of tokens, make sure to confirm with local and federal laws that it is actually legal in your jurisdiction to hold or trade blockchain-based tokens.  Additionally, consult an accountant for properly filing taxes on any tokens you buy or sell; for most countries, trading of blockchain-based tokens is indeed taxable.  For those wanting to issue their own tokens, while we provide many tools and materials to get you issuing your own tokens more quickly, it is highly advised that you still seek legal counsel to ensure that your usage and deployment of such tokens complies with all laws and regulations.  See more discussion on creating token offerings <a href='#ico' onclick='setURL("#ico"); jQuery("html,body").animate({scrollTop: jQuery("#ico").offset().top}, 1000); return false;'>below</a>.  Again, this site only takes care of the technology side of using blockchain and not the legal.</p>
+          
+          <h5 id='ico'><a href='#ico' style='text-decoration:none; border:0;'>How to Create a Token Offering (ICO / ITO)</a></h5>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ripple's built-in decentralized exchange makes it extremely easy to create and issue your own tokens at the mere click of a mouse.  There's no coding and no dealing with smart contracts.  It's as simple as just hitting the <a href='#' onclick='setURL("?action=issue"); $("#action").val("issue"); $("#symbol1").val(""); $("#symbol2").val(""); updateAction(); jQuery("html,body").animate({scrollTop: jQuery("#container").offset().top}, 1000); return false;'>Issue</a> button, and just like that, everyone can begin trading it live.  A video walk-through <a href='https://www.youtube.com/watch?v=Uh4uOVUz42Q&list=PLHAK7FXoElZOyM6MaQ_O_i6ATap2k9r-o&index=6' target='_blank'>here</a> shows it literally takes less than a minute.</p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;However, for those wanting to do a more formal "token offering" (aka ICO or ITO) to raise actual and significant funds, there are some extra business and legal considerations to keep in mind outside of just creating the token itself.  We outline a few common things to check off below, but this by no means is complete nor a substitute for actual legal counsel.  It is highly recommended you still consult with a law firm for your token.  Some groups that focus on this include <a href="http://www.debevoise.com/" target="_blank">Debevoise</a>, <a href='https://www.perkinscoie.com/' target='_blank'>Perkins Coie</a>, and <a href="https://argongroup.com/" target="_blank">Argon Group</a>.</p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For starters, a typical token offering will have, in addition to the token itself, a white paper describing the token purpose and a token purchase agreement outlining the legalities.  The former acts to convince people why they should support you and your token; the latter is to make sure you and the buyer do not get in trouble with the law and regulatory authorities.  Examples of these can be found on <a href='https://www.smithandcrown.com/icos/' target='_blank'>Smith and Crown</a> from other real token offerings.  We have also worked with third party law firms to provide a free <a href='Sample_Token_Purchase_Agreement.docx' target='_blank'>Sample Token Purchase Agreement</a>, which you can use to get started more quickly and should help cut down legal costs by not drafting from scratch.  Note though that this template is only for <b>non-security</b> tokens with actual utility use in a project.  If there is any likelihood of your token being regarded as a security or equity, definitely consult legal counsel to draft a proper proposal.</p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;On the technological side, more advanced users also may want to implement authorization of token holders and other compliance features, which are available under the <a href='#' onclick='jQuery("html,body").animate({scrollTop: jQuery("#container").offset().top}, 1000, function() {showSettings();}); return false;'>Advanced Settings</a> window.  A demo of a token that is only tradable amongst approved, whitelisted users is available <a href='https://www.theworldexchange.net/?symbol1=TTT.rBcA1MkS2jtywAAi9bWfGsUk9R6RWQAyKr&symbol2=XRP' target='_blank'>here</a>, which you'll notice can be viewed publicly but not purchased or sold unless your account has been authorized by the issuer (useful for satisfying KYC/AML requirements).  More information about the various settings and use cases for them can be found at Ripple's <a href='https://ripple.com/build/gateway-guide/' target='_blank'>Gateway</a> and <a href='https://ripple.com/build/rippleapi/' target='_blank'>API</a> documentation.</p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lastly, if you're trying to raise funds for a project, cause, or business, it is still up to you to communicate and market that to the public.  The blockchain technology behind this site only provides a means to handle transactions for you and your users.  It is no different than linking to Paypal or Google Wallet to let others pay you but you still needing to build an online store to market and sell your product.  Here, you can link to The World Exchange with your unique token URL to let others buy or sell it, but you must still have your own site to explain what that token does and why others should use it.</p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As always, remember that this site is only a tool for the technology. Legal and business considerations have to still be taken care of on your end.  More importantly, laws and regulations are constantly evolving, especially for things relating to blockchain, so make sure to thoroughly understand them or consult someone who does before doing anything serious like a token sale.</p>
+          
+          <h5 id='works'><a href='#works' style='text-decoration:none; border:0;'>How Does It Work / What's the Catch?</a><br /><span style='font-size:smaller; font-weight:normal;'>* and disclaimers, technicalities/legalities, etc...</span></h5>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For the tech savy, The World Exchange is essentially a fully client-side wallet, a locally run tool that connects you directly with the <a href='https://en.wikipedia.org/wiki/Ripple_(payment_protocol)' target='_blank'>Ripple</a> network.  This is the most secure way to interact with blockchain / distributed ledger technologies by sheer design.  Most exchange services turn themselves into a central point of failure by collecting user information which they must then secure.  <b>Our site is completely pass through and is an exchange in name only.  Nothing is stored or run through the site itself.</b>  You can test this yourself by saving the page and running it without actually coming to this site or by blocking theworldexchange.net on your firewall and seeing the page still work.  You can even disconnect your computer from the internet completely and just create an address to deposit funds into (aka a paper wallet / <a href='http://bitcoin.stackexchange.com/questions/30773/how-can-an-online-wallet-be-more-secure-than-paper-wallets-or-cold-storages' target='_blank'>cold wallet</a>).  It literally only runs on your computer.  For those that know how to code, you can also just right-click the site and view source to see that this only interacts with the Ripple API; it's all HTML/Javascript which by nature is open-source and viewable by anyone.  A <a href='https://github.com/Autodidactic-I/TheWorldExchange' target='_blank'>Github</a> project is also available for those who want something more spelled out. The site quite literally is just a direct user interface provided as-is and free of charge for you to use the <a href='https://en.wikipedia.org/wiki/Ripple_(payment_protocol)' target='_blank'>Ripple</a> network.</p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The underlying technology behind the scenes is the <a href='https://en.wikipedia.org/wiki/Ripple_(payment_protocol)' target='_blank'>Ripple</a> consensus ledger designed to allow two parties to transmit between each other with no intermediary.  It is similar to Bitcoin's blockchain technology except that it not only facilitates quick transactions with no middlemen, it also allows anyone to issue new tokens to represent value.  Whereas other cryptocurrencies are just that, currencies to be traded, Ripple is actually a full-on exchange through which anything can be issued and traded.  You can even trade other cryptocurrencies through Ripple itself.  Like Bitcoin, it is decentralized and distributed worldwide, meaning that there is no one who can interfere with your use and no one else is responsible for anything that happens except you.</p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='https://en.wikipedia.org/wiki/Ripple_(payment_protocol)' target='_blank'>Ripple</a> is actually a mature and well-established technology in industry that's been online since 2013.  <a href='https://www.ripple.com/' target='_blank'>Ripple Labs</a>, the company which created the technology, has already implemented the technology in many major U.S. banks.  The Ripple network itself is just sitting there on the internet with no barrier to entry or cost for anyone to connect to and use.  Yet, the technology has been little known publicly and virtually no one else has created a similarly free, fully featured interface to the network.  This is for a number of reasons:</p>
+          <ul>
+          <li><b><a href='https://www.ripple.com/' target='_blank'>Ripple Labs</a> has pivoted to applying their technology just to speeding up bank transactions.</b>  That is but a sliver of what their technology is capable of, but as a company with many investors and private interests, they had to focus their use case.  As a result of their financial industry focus, they had to retreat from being too public with their work.  This combined with the stigma of the company having "sold out to banks" is why Ripple is less known today than it was in 2014 when it first started.  One could say that The World Exchange is effectively a replacement and spiritual successor to their former official wallet, <a href='http://www.rippletrade.com/' target='_blank'>RippleTrade</a>, which as a result of their pivot has been shut down and abandoned; in fact, RippleTrade accounts are directly usable with the same keys here at The World Exchange because it's the same Ripple network behind the scenes.</li>
+          <li><b>The few other Ripple wallets or services that exist only store and exchange XRP as a currency, completely ignoring its decentralized exchange and numerous other features.</b>  Again, that is but a sliver of what Ripple's technology is capable of, but of the few other Ripple-supporting products that exist, virtually none of them showcase the fact that Ripple can do far more than just send money quickly.  Part of it is tied to Ripple Labs' pivot to bank transactions, which led to the developer community and ecosystem becoming largely neglected.  The other part is pure economics.  As <a href='#global' onclick='setURL("#global"); jQuery("html,body").animate({scrollTop: jQuery("#global").offset().top}, 1000); return false;'>described previously</a>, many cryptocurrency exchanges that do exist "re-invent the wheel" by becoming a traditional exchange themselves that just happens to list cryptocurrencies.  They do this so they can charge a fee for their services and insert themselves as the middleman that blockchain technology was designed to eliminate.  If they were to simply provide access to the free, decentralized exchange that already exists within Ripple itself, they would make themselves obsolete and have little chance to make a profit.  Which leads us to the final point...</li>
+          <li><b>There is no business case for making something that is completely free.</b>  The World Exchange is a pure, vanilla, client-side tool for the Ripple network and charges nothing to use.  There is no extra process in between you and the network and no way for the creators of the website to profit.  No VC would ever fund a free-to-use platform with no way to make money.  This site was created purely out of interest with no business intent except to showcase the capabilities of blockchain technologies like Ripple and encourage more activity in the space.</li>
+          </ul>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Things that are free and open are very rare, and it is a natural human response to be skeptical.  The nice part is because this is free and open, you don't need to speculate.  Just go ahead and create an account to try things out with.  Do something with it or do nothing.  It is up to you.  The technology, however, is here and open to all.</p>
+          
+          <h5 id='reading'><a href='#reading' style='text-decoration:none; border:0;'>Further Reading and Learning</a></h5>
+          <ul>
+          <li><a href='https://www.pftq.com/blabberbox/?page=The_True_Potential_of_Ripple_and_XRP' target='_blank'>The True Potential of Ripple and XRP</a> - The original vision and inspiration for the site by its creator.</li>
+          <li><a href='https://github.com/Autodidactic-I/TheWorldExchange' target='_blank'>The World Exchange Github Project</a> - Although you can just right-click and view source, here is the webpage open-sourced on Github as well. Others are welcome to also contribute or build on top.</li>
+          <li><a href='http://www.xrpchat.com/' target='_blank'>XRPChat</a>, <a href='https://forum.ripple.com/' target='_blank'>Ripple Official Forums</a> - Community sites for help and support.</li>
+          <li><a href='https://en.wikipedia.org/wiki/Ripple_(payment_protocol)' target='_blank'>The Ripple Protocol</a> - History and details of the Ripple technology itself.</li>
+          </ul>
+          <p>&nbsp;</p>
+          <p style='text-align:right;'><a href='/' onclick='jQuery("html,body").animate({scrollTop: jQuery("#container").offset().top}, 1000); setURL(""); return false;'>[ Back to The World Exchange ]</a></p>
+      </div>
+    </div>
+    
+       <script>
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )
+          {
+          
+          }
+        else
+          particlesJS.load('particles-js', 'particles.json', function() {
+            console.log('callback - particles.js config loaded');
+          });
+        $("#particles-js").css("height", ($(window).height()-70-5)+"px");
+        $("#loginBackground").css("height", ($(window).height())+"px");
+      </script>
+
+      <!-- Google Analytics for anonymous metrics on site usage -->
+      <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-105376565-1', 'auto');
+        ga('send', 'pageview');
+
+      </script>
+</body>
+</html>
