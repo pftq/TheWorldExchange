@@ -670,7 +670,7 @@ function checkMinBaseCurrency() {
     $("#balanceLabel").css("display", "hidden");
     $("#balanceLabel").css("display", "block");
     $("#balance").css("display", "block");
-    $("#balance").html("Your account needs <a href='#started' onclick='$(\"#about\").css(\"display\", \"block\"); jQuery(\"html,body\").animate({scrollTop: jQuery(\"#started\").offset().top}, 1000); setURL(\"#started\"); return false;'>&gt;= "+minBaseCurrency+" "+baseCurrency+"</a>.<br />You currently have: "+(holdings[baseCurrency])+".<br />See: <a href='#started' onclick='$(\"#about\").css(\"display\", \"block\"); jQuery(\"html,body\").animate({scrollTop: jQuery(\"#started\").offset().top}, 1000); setURL(\"#started\"); return false;'>How to Get Started</a>");
+    $("#balance").html("Your account needs <a href='#started' onclick='$(\"#about\").css(\"display\", \"block\"); jQuery(\"html,body\").animate({scrollTop: jQuery(\"#started\").offset().top}, 1000); setURL(\"#started\"); return false;'>&gt;= "+minBaseCurrency+" "+baseCurrency+"</a>."+(isMobile()? " (Currently: "+(holdings[baseCurrency])+")":"<br />You currently have: "+(holdings[baseCurrency])+".<br />See: <a href='#started' onclick='$(\"#about\").css(\"display\", \"block\"); jQuery(\"html,body\").animate({scrollTop: jQuery(\"#started\").offset().top}, 1000); setURL(\"#started\"); return false;'>How to Get Started</a>"));
   }
 }
 
