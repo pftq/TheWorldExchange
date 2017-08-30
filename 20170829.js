@@ -1724,7 +1724,7 @@ function updateSymbol1() {
   refreshLayout();
   
   // Force an orderbook refresh immediately when symbol changes
-  if(symbol1!=oldSymbol || issuer1!=oldIssuer) refreshImmediately = true;
+  if(symbol1!=oldSymbol || issuer1!=oldIssuer || action=="send") refreshImmediately = true;
 }
 
 // Symbol on the right
@@ -1780,7 +1780,7 @@ function updateSymbol2() {
   refreshLayout();
   
   // Update orderbook immediately if symbol changes
-  if(symbol2!=oldSymbol || issuer2!=oldIssuer) refreshImmediately = true;
+  if(symbol2!=oldSymbol || issuer2!=oldIssuer || action=="send") refreshImmediately = true;
 }
 
 // Calculate whether we should show or hide the orderbook (either we are issuing something and logged in or on the buy/sell tabs)
