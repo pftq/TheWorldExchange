@@ -834,6 +834,7 @@ function getSelectedText() {
 function loadOrderbook(updateMessageOnly, repeat) {
   if(updateMessageOnly===undefined || updateMessageOnly=='undefined') updateMessageOnly = false;
   if(repeat===undefined || repeat=='undefined') repeat = true;
+  if(action=='send') updateMessageOnly = true;
   try {
   //console.log("orderbook-entry: "+showOrderbook+", symbol1="+symbol1+", symbol2="+symbol2);
   var currentOrderbook = null;
@@ -1424,7 +1425,7 @@ function loadOrderbook(updateMessageOnly, repeat) {
      
     try {
       // Back and forth loop with loadAccount
-      if(repeat && !updateMessageOnly) loadAccount(true);
+      if(repeat) loadAccount(true);
     }
     catch(err) {
       // Load account should already be restarting the loop without us doing it here
@@ -1438,7 +1439,7 @@ function loadOrderbook(updateMessageOnly, repeat) {
     // If anything unexpected arises, restart the orderbook loop
     console.log("Uncaught exception in loadOrderbook: "+exxx);
     console.log("Restarting orderbook refresh...");
-    if(repeat && !updateMessageOnly) 
+    if(repeat) 
       interruptableTimer(loadOrderbook);
   }
 }
