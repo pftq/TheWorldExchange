@@ -1256,8 +1256,9 @@ function loadOrderbook(updateMessageOnly, repeat) {
           errored=true;
           var qrsize = 196;
           if(isMobile()) qrsize = 256;
-          $("#errors").html("Send to others by inputting their account address above.<br />For non-XRP, make sure they set their <a href='#' onclick='aboutReceivables(); return false;'>Receivable Tokens</a> list.<br /><br />To receive or let others send to you, share the below link or QR Code:<br /><input type='text' value='https://www.theworldexchange.net/?action=send&amp;recipient="+address+($("#qty1").val()==""? "":"&amp;qty1="+$("#qty1").val())+"' onclick='this.select();' readonly='readonly' class='linkShare' /><br /><br /><div id='qrcode' style='text-align:center; margin:auto; width:"+qrsize+"px;'> </div>");
-          new QRCode(document.getElementById("qrcode"), {text:"https://www.theworldexchange.net/?action=send&recipient="+address+($("#qty1").val()==""? "":"&qty1="+$("#qty1").val()), width:qrsize, height:qrsize});
+          $("#errors").html("Send to others by inputting their account address above.<br />For non-XRP, make sure they set their <a href='#' onclick='aboutReceivables(); return false;'>Receivable Tokens</a> list."+(address==""? "":"<br /><br />To receive or let others send to you, share the below link or QR Code:<br /><input type='text' value='https://www.theworldexchange.net/?action=send&amp;recipient="+address+($("#qty1").val()==""? "":"&amp;qty1="+$("#qty1").val())+"' onclick='this.select();' readonly='readonly' class='linkShare' /><br /><br /><div id='qrcode' style='text-align:center; margin:auto; width:"+qrsize+"px;'> </div>"));
+          if(address!="")
+            new QRCode(document.getElementById("qrcode"), {text:"https://www.theworldexchange.net/?action=send&recipient="+address+($("#qty1").val()==""? "":"&qty1="+$("#qty1").val()), width:qrsize, height:qrsize});
           refreshLayout();
       }
       else refreshLayout();
