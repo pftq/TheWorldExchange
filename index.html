@@ -19,8 +19,8 @@
     <script type="text/javascript" src="jquery-ui-1.10.3.custom.min.js"></script>
     <script type="text/javascript" src="particles.js"></script>
     <script type="text/javascript" src="qrcode.js"></script>
-    <script type="text/javascript" src="20170829.js"></script>
-    <link rel="stylesheet" href="20170829.css">
+    <script type="text/javascript" src="20170907x.js"></script>
+    <link rel="stylesheet" href="20170907x.css">
     <link rel="stylesheet" href="jquery-ui.css">
     <link rel="stylesheet" href="smoothDivScroll.css">
     
@@ -83,6 +83,9 @@
     </div>
     
     <div id='chatbox' style='display:none;'>
+      <div id='chatSettings' style='display:none;'>
+      Your Display Name: <a id='displayName' href='#' onclick='showDisplayName();'>&lt; Click Here to Set &gt;</a>
+      </div>
       <div id='chatHistory'>
         <div id='chatHistoryAnnouncement'>
         Welcome to The World Exchange Chat Box, run entirely decentralized via blockchain! All messages are recorded forever, timestamped, unchangeable, and visible to anyone. It doubles as blockchain notary for indisputable proof you said something. Each message costs <span id='feeAnnouncement'>0.000012</span> XRP ($<span id='feeDollar'>0.000003</span>) for min. network fee + transaction but nothing more.<br /><hr />
@@ -184,6 +187,25 @@
       </div>
     </div>
     
+    <div id='setDisplayName' class='popup' style='display:none;'>
+      <div id='setDisplayNameContents'>
+        <h3>Set Your Ripple Display Name...</h3>
+        <div class='settings issuerSettings'>
+        <table>
+        <tr><td style='text-align:left;'>Ripple Display Name:</td><td style='text-align:right;' class='right'><input id='displayNameInput' name='displayNameInput' type='text' value='' placeholder='Enter a display name for others to see...' onclick="this.select();" /></td></tr>
+        </table>
+          <div id='setDisplayNameError'>
+            
+          </div>
+        </div>
+        <div><input id='setDisplayNameSubmit' name='setDisplayNameSubmit' type='submit' value='Submit' /><input id='setDisplayNameCancel' name='setDisplayNameCancel' type='submit' value='Cancel' /></div>
+        <div id='setDisplayNameInfo' class='disclaimer'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Using the above setting, you can assign a display name to your Ripple account for others to see instead of the your public account address.  This works the same way as The World Exchange Chat Box by submitting a minimal transaction of 0.000001 XRP to a designated Ripple Display Names address with text attached.  The text attached here would be your display name (instead of chat).<br />
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is essentially a revival of the no-longer-supported <a href='https://ripple.com/dev-blog/introducing-ripple-names/' target='_blank'>Ripple Names</a>, except it is now stored decentralized on Ripple itself.  The Ripple Display Name is immediately visible across any other site or interface that supports this protocol, such as The World Exchange Chat Box.  <br />
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Any other site or interface which wants to support this display name can do so by reading the memo attached to the latest transaction sent from your public account address to the Ripple Display Names address: <span id='rippleDisplayNameAddress'> </span> <br />(but make sure to only accept the first person who claims the same name)
+        </div>
+      </div>
+    </div>
+    
     <div id='popup' class='popup' style='display:none;'>
       <div id='popupContents'>
         <h3 id='popupHeader'>Info</h3>
@@ -279,7 +301,7 @@
       <div>© 2016 <a href='/'>WorldX LLC</a> | <a target='_blank' href='mailto:contact@theworldexchange.net'>Contact@TheWorldExchange.Net</a> | Follow: <a target='_blank' href='https://twitter.com/WorldExchangeX'>@WorldExchangeX</a></div>
       <div>A Free Fully Client-Side Wallet and Decentralized Exchange Showcasing What's Possible with Blockchain</div>
       <div>Created by <a href="https://www.pftq.com/blabberbox/?page=The_True_Potential_of_Ripple_and_XRP" target="_blank">pftq</a>
-       - Powered by <a target='_blank' href='https://en.wikipedia.org/wiki/Ripple_(payment_protocol)'>Ripple</a> - Open-Sourced on <a href='https://github.com/pftq/TheWorldExchange' target='_blank'>Github</a> (v.2017/08/29)</div>
+       - Powered by <a target='_blank' href='https://en.wikipedia.org/wiki/Ripple_(payment_protocol)'>Ripple</a> - Open-Sourced on <a href='https://github.com/pftq/TheWorldExchange' target='_blank'>Github</a> (v.2017/09/07)</div>
       </div>
       
       
@@ -309,7 +331,7 @@
           </ul>
           <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;And pretty much anything else you can think of.  The whole process literally takes less than a minute (see <a href='https://www.youtube.com/watch?v=Uh4uOVUz42Q&list=PLHAK7FXoElZOyM6MaQ_O_i6ATap2k9r-o&index=6' target='_blank'>video walk-through</a>).  The token is then openly tradable by anyone with its price determined entirely by the free market, just like with any stock, bond, currency, etc.  And thanks to the automatic conversion behind the scenes, you only need to offer it once to automatically offer across every symbol there is, instantly accepting any form of exchange without additional effort.  You can see this yourself with a live example TTT, which is offered only once for XRP <a href='https://www.theworldexchange.net/?symbol1=TTT.rBcA1MkS2jtywAAi9bWfGsUk9R6RWQAyKr&symbol2=XRP' target='_blank'>here</a> but automatically also available across <a href='https://www.theworldexchange.net/?symbol1=TTT.rBcA1MkS2jtywAAi9bWfGsUk9R6RWQAyKr&symbol2=USD' target='_blank'>USD</a>, <a href='https://www.theworldexchange.net/?symbol1=TTT.rBcA1MkS2jtywAAi9bWfGsUk9R6RWQAyKr&symbol2=EUR' target='_blank'>EUR</a>, and <a href='https://www.theworldexchange.net/?symbol1=TTT.rBcA1MkS2jtywAAi9bWfGsUk9R6RWQAyKr&symbol2=BTC' target='_blank'>BTC</a>.</p>
           <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;At some point, you would either buy back the token you issued or offer some other form of exchange/reward/redemption to give it value.  The trust that you do that is why people would buy or accept your token in the real world.  It is your job to enforce and communicate that promise.  It is no different than a credit card issued by a bank, a gift card issued by a store, someone buying a stock on the trust that the company makes money for its shareholders, or a loan being offered on the trust that the borrower pays it back with interest.  Those that break that trust would find it difficult to do business in the future, just like with anything else in the real world.  The most important part is that every transaction on the exchange is permanent and there for all to see, so no one can ever lie and get away with it.</p>
-          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: The site here only takes care of the technology side. For creating an actual token sale (ICO / ITO) or other serious projects, make sure to also see <a href='#ico' onclick='setURL("#ico"); jQuery("html,body").animate({scrollTop: jQuery("#ico").offset().top}, 1000); return false;'>How to Create a Token Offering (ICO / ITO)</a>, where we cover business/legal considerations, built-in compliance features you can configure, etc in addition to just issuing the token itself.</p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: The site here only takes care of the technology side, not the legal or business aspect. For creating an actual token sale (ICO / ITO) or other serious projects, make sure to also see <a href='#ico' onclick='setURL("#ico"); jQuery("html,body").animate({scrollTop: jQuery("#ico").offset().top}, 1000); return false;'>How to Create a Token Offering (ICO / ITO)</a>, where we discuss business/legal considerations, built-in compliance features you can configure, etc in addition to just issuing the token itself.</p>
           
           <h5 id='global'><a href='#global' style='text-decoration:none; border:0;'>Global and Decentralized - No Middlemen and No Downtime</a></h5>
           <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The best part of all this is everything can be done in the same place, the same "exchange."  In actuality, <b>The World Exchange is not really a place or even an exchange.</b>  It is only an interface to a global, decentralized network that already exists, distributed across the world the same way the internet is.  That network is the <a href='https://en.wikipedia.org/wiki/Ripple_(payment_protocol)' target='_blank'>Ripple</a> consensus ledger, one of many competing blockchain-based technologies, and like the internet, it is everywhere and controlled by no one person.  The World Exchange is but a mere internet service provider connecting you to it.  <b>Nothing is stored or run through The World Exchange site itself.</b>  Everything runs off of the blockchain itself with no middlemen or intermediaries.  As long as you save your account address and secret key, your account is safe even if this site goes down.  You don't actually even need this site to trade and keep using your account.  In fact, you can save this page to your computer, have your firewall block theworldexchange.net, and still access your account with full functionality.  You can even disconnect your computer from the internet completely and just create an address to deposit funds into (aka a paper wallet / <a href='http://bitcoin.stackexchange.com/questions/30773/how-can-an-online-wallet-be-more-secure-than-paper-wallets-or-cold-storages' target='_blank'>cold wallet</a>).  The site literally doesn't do anything other than offer you the webpage for download.  In addition, there is <b>no downtime ever</b> because there is no actual exchange to overload, and there is <b>no data to be lost to any security breaches</b> because no data is actually passed through or stored on the site in the first place.  This is an exchange in name only that allows anyone can trade or transact with other users directly with no one else in between, and like the internet, this "exchange" is forever online as long as there are other users just like yourself.</p>
