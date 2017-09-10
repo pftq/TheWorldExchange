@@ -2845,7 +2845,10 @@ function getAllDisplayNames(exitFunction, startIndex) {
       }
       if(transactions.length>=options.limit)
         getAllDisplayNames(exitFunction, startIndex); // get next batch if this one was full
-      else exitFunction();
+      else {
+        updateSymbols();
+        exitFunction();
+      }
     }
   }, function(err) {
     console.log("Display name retrieval error: "+err);
