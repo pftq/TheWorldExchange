@@ -1276,7 +1276,7 @@ function loadOrderbook(updateMessageOnly, repeat) {
       }
       else if(action=='issue' && (symbol1=="" || orderbook==null || Math.max(orderbook.bids.length, orderbook.asks.length)==0)) {
           errored=true;
-          $("#errors").html("Issue your own token for others trade and represent anything you can think of.<br />Token symbols must be exactly 3 letters and cannot be '"+baseCurrency+"'.<br /><br />Offer your symbol for "+baseCurrency+" to automatically offer for every symbol<br /> and accept any form of exchange. (think of it as a wildcard)<br /><br />See: <a href='#represent' onclick='document.getElementById(\"about\").style.display=\"block\"; setURL(\"#represent\"); jQuery(\"html,body\").animate({scrollTop: jQuery(\"#represent\").offset().top}, 1000); return false;'>Issue Tokens to Represent Any Form of Value or Ownership</a>");
+          $("#errors").html("Issue your own token for others trade and represent anything you want.<br />Token symbols must be exactly 3 letters and cannot be '"+baseCurrency+"'.<br /><br />Offer your symbol for "+baseCurrency+" to automatically offer for every symbol<br /> and accept any form of exchange. (think of it as a wildcard)<br /><br />See: <a href='#represent' onclick='document.getElementById(\"about\").style.display=\"block\"; setURL(\"#represent\"); jQuery(\"html,body\").animate({scrollTop: jQuery(\"#represent\").offset().top}, 1000); return false;'>Issue Tokens to Represent Any Form of Value or Ownership</a>");
           refreshLayout();
       }
       else if(action=='send') {
@@ -1820,7 +1820,7 @@ function showOrHideOrderbook() {
 // Resize the layout to fit the page
 function rescaleWindow(resizeChat) {
   if(resizeChat===undefined || resizeChat=='undefined') resizeChat = true;
-  $('#container').css('height', Math.floor($(window).height()*.97)+'px');
+  $('#container').css('height', Math.floor(Math.max(600, $(window).height())*.97)+'px');
   $("#particles-js").css("height", ($("#container").height()-70-5)+"px");
   $("#loginBackground").css("height", (windowHeight())+"px");
   
