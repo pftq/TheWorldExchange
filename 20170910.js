@@ -1869,7 +1869,8 @@ function refreshLayout() {
   updateBookDepth();
   
   temp = Math.floor(Math.max(10, (($("#container").height()-$('#content').height()-$('#footer').height()-20))));
-  $('#footer').css('margin-top', temp+'px');
+  if(Math.abs(temp-parseInt($('#footer').css('margin-top')))>2)
+    $('#footer').css('margin-top', temp+'px');
     
 }
 
