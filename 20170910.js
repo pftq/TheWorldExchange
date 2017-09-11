@@ -201,7 +201,7 @@ function stripHTML(dirtyString) {
   var container = document.createElement('div');
   var text = document.createTextNode($($.parseHTML(dirtyString)).text());
   container.appendChild(text);
-  return container.innerHTML; // innerHTML will be a xss safe string
+  return $.trim(container.innerHTML); // innerHTML will be a xss safe string
 }
 
 // Replace welcome message with login state or vice versa
@@ -229,11 +229,11 @@ function loadAccount(loadOrderbookNext) {
   var changeMiscMenu = false;
 
   new Promise(function(resolve, reject) { 
-    var temp = $("#account").val();
+    var temp = $.trim($("#account").val());
     
     // Save the account address to cookie (do not touch secret keys)
     if(temp!=address) {
-      address = $("#account").val();
+      address = $.trim($("#account").val());
       Cookies.set('accountAddr', address, { expires: 7 });
       console.log("Account address saved to cookie: "+address);
       updateSymbol1();
@@ -1950,7 +1950,7 @@ function saveLogin() {
       // Otherwise analyze it
       else {
         // Custom-modded ripplelib to expose deriveKeypair for checking validity of the secret + address
-        var pair = api.deriveKeypair($("#keyInput").val());
+        var pair = api.deriveKeypair($.trim($("#keyInput").val()));
         if(pair) {
         
           // Address is derived from the public key which is derived from the secret key
@@ -1962,7 +1962,7 @@ function saveLogin() {
           if($("#accountInput").val()=="") $("#accountInput").val(api.deriveAddress(publicKey));
           
           // Else check against what they put
-          if(api.deriveAddress(publicKey)==$("#accountInput").val()) {
+          if(api.deriveAddress(publicKey)==$.trim($("#accountInput").val())) {
             validKey = true;
             saveLogin2(validKey, error);
           }
@@ -1972,7 +1972,7 @@ function saveLogin() {
             console.log("Secret key failed.");
             
             // Check if it's the RegularKey instead by first looking up the RegularKey setting of the account
-            api.getSettings($("#accountInput").val()).then(function(receivedSettings) {
+            api.getSettings($.trim($("#accountInput").val())).then(function(receivedSettings) {
               if("regularKey" in receivedSettings) {
                 console.log("Checking against additional regularKey: "+receivedSettings["regularKey"]);
                 
@@ -2011,13 +2011,13 @@ function saveLogin() {
 function saveLogin2(validKey, error) {
   if(validKey //|| failedLogin
   ) {
-    $("#account").val($("#accountInput").val());
+    $("#account").val($.trim($("#accountInput").val()));
     // Update and save the account address immediately here, forgot why but something to do with it needing to be used instantly
-    address = $("#accountInput").val();
+    address = $.trim($("#accountInput").val());
     Cookies.set('accountAddr', address, { expires: 7 });
     $("#miscMenu").html(""); // force a rebuild of the account menu
     console.log("Account address saved to cookie: "+address);
-    var tempKey = $("#keyInput").val();
+    var tempKey = $.trim($("#keyInput").val());
     if(tempKey) key = tempKey;
     $("#keyInput").val("");
     if(key) $("#keyInput").prop("placeholder", "-- Secret Key Hidden --");
@@ -2118,13 +2118,13 @@ function hideIssuer() {
 
 // Save the issuer
 function saveIssuer1() {
-  issuer1 = $("#issuerInput").val();
+  issuer1 = $.trim($("#issuerInput").val());
   refreshImmediately = true;
   hideIssuer();
 }
 
 function saveIssuer2() {
-  issuer2 = ($("#issuerList").val()? $("#issuerList").val():$("#issuerInput").val());
+  issuer2 = ($.trim($("#issuerList").val())? $.trim($("#issuerList").val()):$.trim($("#issuerInput").val()));
   refreshImmediately = true;
   hideIssuer();
 }
@@ -2283,12 +2283,12 @@ function replaceTrustedNameWithAddress(container, id, address) {
 // Add row for inputting a new trustline
 function addTrustline() {
   var n = $('#trustlinesTable tr').length-1;
-  $('#trustlinesTable tr:last').after("<tr><td  id='trustSymbol"+n+"' class='trustSymbol'><input type='text' id='trustedSymbol"+n+"' name='trustedSymbol"+n+"' placeholder='Symbol Name...' value='' /></td><td id='trustIssuer"+n+"' class='trustIssuer'><input type='text' id='trustedIssuer"+n+"' name='trustedIssuer"+n+"' placeholder='"+(settings["requireAuthorization"]? "Holder Address":"Issuer Address")+"...' value='' /></td><td id='trustLimit"+n+"' class='trustLimit'>"+(settings["requireAuthorization"]? "<input type='hidden' id='approved"+n+"' value='true' />"+"<input type='checkbox' id='allowTransfer"+n+" name='allowTransfer"+n+"' />":"<input type='number' id='limit"+n+"' name='limit"+n+"' value='0' />")+"</td></tr>");
+  $('#trustlinesTable tr:last').after("<tr><td  id='trustSymbol"+n+"' class='trustSymbol'><input type='text' id='trustedSymbol"+n+"' name='trustedSymbol"+n+"' placeholder='Symbol Name...' value='' /></td><td id='trustIssuer"+n+"' class='trustIssuer'><input type='text' id='trustedIssuer"+n+"' name='trustedIssuer"+n+"' placeholder='"+(settings["requireAuthorization"]? "Holder Address":"Issuer Address")+"...' value='' /></td><td id='trustLimit"+n+"' class='trustLimit'>"+(settings["requireAuthorization"]? "<input type='hidden' id='approved"+n+"' value='true' />"+"<input type='checkbox' id='allowTransfer"+n+"' name='allowTransfer"+n+"' checked='checked' />":"<input type='number' id='limit"+n+"' name='limit"+n+"' value='0' />")+"</td></tr>");
   $('#trustlinesBox').scrollTop($('#trustlinesBox')[0].scrollHeight);
   $("#trustedSymbol"+n).on("change", function (e) {
-    var temp = $("#trustedSymbol"+n).val().toUpperCase();
+    var temp = $.trim($("#trustedSymbol"+n).val().toUpperCase());
     $("#trustedSymbol"+n).val(temp);
-    var existingIssuer = $("#trustedIssuer"+n).val();
+    var existingIssuer = $.trim($("#trustedIssuer"+n).val());
     if(!settings["requireAuthorization"] && temp.length>0) {
       if(temp in issuers) {
         var selectMenu = "<select id='trustedIssuer"+n+"' name='trustedIssuer"+n+"'>";
@@ -2332,19 +2332,49 @@ function updateTrustline(i, updated) {
     var limit = 0;
     var approved = true;
     var ripplingDisabled = true;
+    var updateDesc = "";
     while(i<n) {
-      symbol = $("#trustedSymbol"+i).val();
-      issuer = $("#trustedIssuer"+i).val();
+      symbol = $.trim($("#trustedSymbol"+i).val());
+      issuer = $.trim($("#trustedIssuer"+i).val());
       if(symbol=="" || issuer == "" ) continue;
       try {
-        limit = settings["requireAuthorization"]? 0:parseFloat($("#limit"+i).val());
-        if(settings["requireAuthorization"] && !$("#allowTransfer"+i).prop("checked")) ripplingDisabled = false;
+        limit = settings["requireAuthorization"]? 0:parseFloat($.trim($("#limit"+i).val()));
+        if(settings["requireAuthorization"] && $("#allowTransfer"+i).prop("checked")) ripplingDisabled = false;
+        else ripplingDisabled = true;
       }
       catch(ex) { console.log("Error reading limit for "+symbol+" / "+issuer+": "+ex); limit = 0; }
+      
       if(settings["requireAuthorization"]) approved = $("#approved"+i).val()=="true";
       else approved = false;
-      if(!(symbol in trustlines) || !(issuer in trustlines[symbol]) || limit!=trustlines[symbol][issuer].limit || ripplingDisabled!=trustlines[symbol][issuer].ripplingDisabled || (settings["requireAuthorization"] && approved == false) || (limit==0 && !settings["requireAuthorization"])) {
+      
+      if(!(symbol in trustlines)) {
         hasUpdates = true;
+        updateDesc = "Adding new symbol.";
+        break;
+      }
+      else if(!(issuer in trustlines[symbol])) {
+        hasUpdates = true;
+        updateDesc = "Adding new address for symbol.";
+        break;
+      }
+      else if(limit!=trustlines[symbol][issuer].limit) {
+        hasUpdates = true;
+        updateDesc = "Updating old limit "+trustlines[symbol][issuer].limit+" to "+limit;
+        break;
+      }
+      else if((ripplingDisabled==true && trustlines[symbol][issuer].ripplingDisabled!=true) || (!ripplingDisabled && trustlines[symbol][issuer].ripplingDisabled==true)) {
+        hasUpdates = true;
+        updateDesc = "Updating ripplingDisabled setting from "+trustlines[symbol][issuer].ripplingDisabled+" to "+ripplingDisabled+".";
+        break;
+      }
+      else if((settings["requireAuthorization"] && approved == false) ) {
+        hasUpdates = true;
+        updateDesc = "Updating authorization from "+settings["requireAuthorization"]+" to "+approved+".";
+        break;
+      }
+      else if((limit==0 && !settings["requireAuthorization"])) {
+        hasUpdates = true;
+        updateDesc = "Removing due to zero limit and no authorization.";
         break;
       }
       i++;
@@ -2354,75 +2384,86 @@ function updateTrustline(i, updated) {
     var backer = issuer;
     if(backer != getIssuerName(backer)) backer = getIssuerName(backer);
     
-    // Update the row we found
-    if(hasUpdates) $("#popupText").append("<br />Updating "+symbol+" by "+backer+"...");
-    // Otherwise end it if we find no rows and hit the end of the line
-    else if(i>=n) {
+    // End it if we find no rows and hit the end of the line
+    if(i>=n) {
       if(updated) {
         $("#popupText").append("<br />All updates complete. Updates can require a few minutes to take effect.");
-        return;
       }
       else {
         $("#popupText").append("<br />No updates to process.  All done.");
-        return;
       }
     }
     
-    // Build JSON for trustline update
-    var line = {currency:symbol, counterparty:issuer, limit:""+limit, authorized:settings["requireAuthorization"]&&approved, ripplingDisabled: ripplingDisabled};
-    
-    console.log("Saving trustline: ");
-    console.log(line);
-    
-    // All transactions should have higher max thresholds to avoid erroring out during high trading volume
-    var options = {};
-    options.maxFee = maxFee;
-    options.maxLedgerVersionOffset = maxLedgerOffset;
-    noDisconnecting = true;
-    api.prepareTrustline(address, line, options).then(function(prepared)
+    // Update the row we found
+    else if(hasUpdates) 
     {
-        var transaction = "";
-        var transactionID = -1;
-        try {
-          var result = api.sign(prepared.txJSON, key);
-          transaction = result.signedTransaction;
-          transactionID = result.id;
-        }
-        catch(er) {
-          $("#popupText").append("<br /> - Error signing update for "+symbol+" by "+backer+": "+er);
-        }
-        
-        if(transaction!="") {
-          api.submit(transaction).then(function(result) {
-            //loadAccount();
+      $("#popupText").append("<br />Updating "+symbol+" by "+backer+": "+updateDesc);
+      
+      
+      // Build JSON for trustline update
+      var line = {currency:symbol, counterparty:issuer, limit:""+limit, authorized:settings["requireAuthorization"]&&approved, ripplingDisabled: ripplingDisabled};
+      
+      console.log("Saving trustline: ");
+      console.log(line);
+      
+      // All transactions should have higher max thresholds to avoid erroring out during high trading volume
+      var options = {};
+      options.maxFee = maxFee;
+      options.maxLedgerVersionOffset = maxLedgerOffset;
+      noDisconnecting = true;
+      api.prepareTrustline(address, line, options).then(function(prepared)
+      {
+          var transaction = "";
+          var transactionID = -1;
+          try {
+            var result = api.sign(prepared.txJSON, key);
+            transaction = result.signedTransaction;
+            transactionID = result.id;
+          }
+          catch(er) {
+            $("#popupText").append("<br /> - Error signing update for "+symbol+" by "+backer+": "+er);
+          }
+          
+          if(transaction!="") {
+            api.submit(transaction).then(function(result) {
+              //loadAccount();
+              noDisconnecting = false;
+              
+              // Friendlier messages when we can
+              if(result.resultCode=="tesSUCCESS") $("#popupText").append("<br /> - Completed update for "+symbol+" by "+backer+". (See <a href='"+transactionHistoryURL+transactionID+"' target='_blank'>transaction details</a>)");
+              else if(result.resultCode=="terQUEUED") $("#popupText").append("<br /> - Update queued due to high load on network. Check back in a few minutes to confirm completion and retry if not.");
+              else if(result.resultCode=="tecNO_LINE_INSUF_RESERVE") $("#popupText").append("<br /> - Not enough "+baseCurrency+" held to add new symbol. Min XRP required = 20 base + 5 per additional symbol.  Fund your account with 5 more XRP or remove another symbol to add this one.");
+              else $("#popupText").append("<br /> - Error for adding "+symbol+" by "+backer+" ("+result.resultCode+"): "+result.resultMessage+" (See <a href='"+transactionHistoryURL+transactionID+"' target='_blank'>transaction details</a>)");
+              
+            }, function (err) {
+            
+              $("#popupText").append("<br /> - Error updating for "+symbol+" by "+backer+": "+err);
+              
+            }).then(function() {
+              console.log("Processing next row...");
+              // Process next row
+              updateTrustline(i+1, true);
+              
+            }, function(err) {
+              $("#popupText").append("<br /> - Error updating for "+symbol+" by "+backer+": "+err);
+            });
+          }
+          else {
             noDisconnecting = false;
-            
-            // Friendlier messages when we can
-            if(result.resultCode=="tesSUCCESS") $("#popupText").append("<br /> - Completed update for "+symbol+" by "+backer+". (See <a href='"+transactionHistoryURL+transactionID+"' target='_blank'>transaction details</a>)");
-            else if(result.resultCode=="terQUEUED") $("#popupText").append("<br /> - Update queued due to high load on network. Check back in a few minutes to confirm completion and retry if not.");
-            else if(result.resultCode=="tecNO_LINE_INSUF_RESERVE") $("#popupText").append("<br /> - Not enough "+baseCurrency+" held to add new symbol. Min XRP required = 20 base + 5 per additional symbol.  Fund your account with 5 more XRP or remove another symbol to add this one.");
-            else $("#popupText").append("<br /> - Error for adding "+symbol+" by "+backer+" ("+result.resultCode+"): "+result.resultMessage+" (See <a href='"+transactionHistoryURL+transactionID+"' target='_blank'>transaction details</a>)");
-            
-          }, function (err) {
-          
-            $("#popupText").append("<br /> - Error updating for "+symbol+" by "+backer+": "+err);
-            
-          }).then(function() {
-          
-            // Process next row
-            updateTrustline(i+1, true);
-            
-          });
-        }
-        else noDisconnecting = false;
-    }, function (er) {
-        $("#popupText").append("<br /> - Error preparing update for "+symbol+" by "+backer+": "+err);
-        noDisconnecting = false;
-    });
+            $("#popupText").append("<br /> - Unable to sign update for "+symbol+" by "+backer+": "+err);
+          }
+      }, function (er) {
+          $("#popupText").append("<br /> - Error preparing update for "+symbol+" by "+backer+": "+err);
+          noDisconnecting = false;
+      });
+    }
+    else {
+      loginWarning();
+      $("#popupText").append("<br />Invalid account address and secret key combination.");
+    }
   }
   else {
-    loginWarning();
-    $("#popupText").append("<br />Invalid account address and secret key combination.");
+    updateTrustline(i+1, true);
   }
 }
 
@@ -2572,7 +2613,7 @@ function saveSettings() {
     for(var k in settings) {
       if(k in stringSettings) {
         if($("#setting_"+k).val()!="" && settings[k]!=$("#setting_"+k).val()) {
-          settings[k] = $("#setting_"+k).val();
+          settings[k] = $.trim($("#setting_"+k).val());
           submittedSettings.push(k);
         }
         else if(settings[k]!=null && $("#setting_"+k).val()=="") {
@@ -3150,7 +3191,7 @@ function hideSendOptions() {
 // Save destination tag to state variable
 function saveSendOptions() {
     if($("#destinationTagInput").val()!="") {
-      destTag = parseInt($("#destinationTagInput").val());
+      destTag = parseInt($.trim($("#destinationTagInput").val()));
       $("#currentDestinationTag").html(""+destTag);
     }
     else {
@@ -3261,8 +3302,8 @@ function submitTransaction() {
     // Sending logic
     if(trans=="send") {
         updateSymbol1();
-        var qty = parseFloat($("#qty1").val());
-        var recipient = $("#recipient").val();
+        var qty = parseFloat($.trim($("#qty1").val()));
+        var recipient = $.trim($("#recipient").val());
         
         // Pre-checks for sending
         if(qty<=0 || !$.isNumeric(qty)) {
@@ -3425,8 +3466,8 @@ function submitTransaction() {
       // Buy/sell/issue logic - issuing is technically the same as selling what you don't have
       else if(trans=="buy" || trans=="sell") {
         updateSymbols();
-        var qty1 = parseFloat($("#qty1").val());
-        var price = parseFloat($("#price").val());
+        var qty1 = parseFloat($.trim($("#qty1").val()));
+        var price = parseFloat($.trim($("#price").val()));
         
         // Preliminary checks
         if(qty1<=0 || !$.isNumeric(qty1)) {
@@ -4058,7 +4099,7 @@ $(document).ready(function() {
     $("#cancelSettings").on("click", function() { hideSettings(); });
     
     // Update the issuer field to match whatever the dropdown menu changes to
-    document.getElementById('issuerList').onchange = function() { $("#issuerInput").val($("#issuerList").val()); };
+    document.getElementById('issuerList').onchange = function() { $("#issuerInput").val($.trim($("#issuerList").val())); };
     
     // Other form controls
     hideIssuer(); 
@@ -4087,7 +4128,7 @@ $(document).ready(function() {
     // Load address from cookie if it exists
     console.log("Account addressed restored from cookie: "+Cookies.get('accountAddr'));
     $("#account").val(Cookies.get('accountAddr'));
-    address = $("#account").val();
+    address = $.trim($("#account").val());
     $("#miscMenu").html(""); // Force account menu refresh
     updateLoginMessage();
     
