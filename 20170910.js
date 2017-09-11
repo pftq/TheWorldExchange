@@ -2814,11 +2814,12 @@ function getDisplayName(addressRequest) {
           displayNameDetails[m] = {date: d, address:addressRequest};
         }
         else if(displayNameDetails[m].address==addressRequest || displayNameDetails[m].date>d) { // otherwise take it only if you had it first
-          console.log("- Ripple Display Name removed from: "+displayNameDetails[m].address+" ("+d+")");
+          console.log("- Ripple Display Name removed from: "+displayNameDetails[m].address+" ("+displayNameDetails[m].date+")");
+          console.log("- Ripple Display Name added to: "+addressRequest+" ("+d+")");
           displayName[displayNameDetails[m].address] = ""; // kick out the other guy who has the name
-          if(displayNameDetails[m].address==address) printDisplayName();
           displayName[addressRequest] = m;
           displayNameDetails[m] = {date: d, address:addressRequest};
+          if(displayNameDetails[m].address==address || addressRequest==address) printDisplayName();
         }
         
       }
@@ -2882,19 +2883,20 @@ function getAllDisplayNames(exitFunction, startIndex) {
           var d = new Date(transactions[i].outcome.timestamp); // date
           var m = stripHTML(transactions[i].specification.memos[0].data); // name
           var addressRequest = transactions[i].address;
-          console.log("Ripple Display Name retrieved: "+m +" ("+d+") for "+transactions[0].address);
+          console.log("Ripple Display Name retrieved: "+m +" ("+d+") for "+addressRequest);
           
           if(!(m in displayNameDetails)) { // if there is no one else with the name, take it
-            console.log("- Ripple Display Name set: "+m+" for "+addressRequest+" on "+d);
+            console.log("- Ripple Display Name added: "+m+" for "+addressRequest+" on "+d);
             displayName[addressRequest] = m;
             displayNameDetails[m] = {date: d, address:addressRequest};
           }
           else if(displayNameDetails[m].address==addressRequest || displayNameDetails[m].date>d) { // otherwise take it only if you had it first
-            console.log("- Ripple Display Name removed from: "+displayNameDetails[m].address+" ("+d+")");
+            console.log("- Ripple Display Name removed from: "+displayNameDetails[m].address+" ("+displayNameDetails[m].date+")");
+            console.log("- Ripple Display Name added to: "+addressRequest+" ("+d+")");
             displayName[displayNameDetails[m].address] = ""; // kick out the other guy who has the name
-            if(displayNameDetails[m].address==address) printDisplayName();
             displayName[addressRequest] = m;
             displayNameDetails[m] = {date: d, address:addressRequest};
+            if(displayNameDetails[m].address==address || addressRequest==address) printDisplayName();
           }
         }
       }
