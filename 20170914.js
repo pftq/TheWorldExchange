@@ -1739,6 +1739,9 @@ function updateSymbol1() {
   // Hide issuer label if there is no issuer and we aren't issuing something
   if(issuer1!="" || action =="issue") {
     $("#issuer1Label").css("visibility", "visible");
+    
+    if(!(issuer1 in displayName) && !(issuer1 in issuerNames)) getDisplayName(issuer1);
+    
     var issuerName = getIssuerName(issuer1);
     $("#issuer1").html("<a href='#' onclick='"+(action=="issue"? "showIssuerYou();":"showIssuer1();")+"'>"+(issuerName.length<=12? issuerName:issuerName.substring(0, 12)+"...")+"</a>");
   }
@@ -1795,6 +1798,9 @@ function updateSymbol2() {
   if(issuer2!="" || action=="send") { // not when it's send action, which shares the field for send options
     //console.log("issuer2="+issuer2);
     $("#issuer2Label").css("visibility", "visible");
+    
+    if(!(issuer2 in displayName) && !(issuer2 in issuerNames)) getDisplayName(issuer2);
+    
     var issuerName = getIssuerName(issuer2);
     $("#issuer2").html("<a href='#' onclick='showIssuer2();'>"+(issuerName.length<=12? issuerName:issuerName.substring(0, 12)+"...")+"</a>");
   }
@@ -2822,8 +2828,11 @@ function getDisplayName(addressRequest) {
           displayName[displayNameDetails[m].address] = ""; // kick out the other guy who has the name
           displayName[addressRequest] = m;
           displayNameDetails[m] = {date: d, address:addressRequest};
-          if(displayNameDetails[m].address==address || addressRequest==address) printDisplayName();
         }
+        
+        if(displayNameDetails[m].address==address || addressRequest==address) printDisplayName();
+        if(displayNameDetails[m].address==issuer1 || addressRequest==issuer1) updateSymbol1();
+        if(displayNameDetails[m].address==issuer2 || addressRequest==issuer2) updateSymbol2();
         
       }
     }, function(err) {
@@ -2899,8 +2908,11 @@ function getAllDisplayNames(exitFunction, startIndex) {
             displayName[displayNameDetails[m].address] = ""; // kick out the other guy who has the name
             displayName[addressRequest] = m;
             displayNameDetails[m] = {date: d, address:addressRequest};
-            if(displayNameDetails[m].address==address || addressRequest==address) printDisplayName();
           }
+          
+          if(displayNameDetails[m].address==address || addressRequest==address) printDisplayName();
+          if(displayNameDetails[m].address==issuer1 || addressRequest==issuer1) updateSymbol1();
+          if(displayNameDetails[m].address==issuer2 || addressRequest==issuer2) updateSymbol2();
         }
       }
       if(transactions.length>=options.limit)
@@ -3606,7 +3618,7 @@ function submitTransaction() {
 // Check for display name or issuer name updated by RippleAPI
 function getIssuerName(addr) {
   if(addr == address) return "You";
-  else if (addr in displayName) return displayName[addr];
+  else if (addr in displayName && displayName[addr]!="") return displayName[addr];
   else if(addr in issuerNames) return issuerNames[addr];
   else return addr;
 }
@@ -3803,8 +3815,8 @@ function runChat() {
     }, function(err) { console.log("Error retrieving transactions from chat server: "+err); return null; })
     .then(function (transactions) {
         // Need to iterate through messages one at a time in linear fashion
-        //if(firstRun) getAllDisplayNames(function () { runChat3(transactions, firstRun); });
-        //else 
+        if(firstRun) getAllDisplayNames(function () { runChat3(transactions, firstRun); });
+        else 
           runChat2(transactions, 0, firstRun);
         
     }, function(err) {
@@ -4057,6 +4069,10 @@ function isMobile() {
 // Page initiation block
 $(document).ready(function() {
 
+    namesAPI = new ripple.RippleAPI({server:namesServer});
+    $("#rippleDisplayNameAddress").html(namesWallet); // Update text info to show names wallet address
+    chatAPI = new ripple.RippleAPI({server:chatServer});
+
      // Initial page fitting
     rescaleWindow(false);
     
@@ -4278,12 +4294,10 @@ $(document).ready(function() {
             
             // Kick off chatbox listener
             rescaleChat();
-            namesAPI = new ripple.RippleAPI({server:namesServer});
-            getAllDisplayNames(function() {
-              $("#rippleDisplayNameAddress").html(namesWallet); // Update text info to show names wallet address
-              chatAPI = new ripple.RippleAPI({server:chatServer});
+            if(showChat) {
               runChat();
-            });
+            }
+            else getDisplayName();
             
           }, "json" );
           
