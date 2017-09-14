@@ -1290,6 +1290,22 @@ function loadOrderbook(updateMessageOnly, repeat) {
       else refreshLayout();
     }
     
+    // Add to autocomplete if this is a real ticker
+    if(orderbook!=null && orderbookExists) {
+      if(symbol1!="" && !(symbol1 in issuers)) {
+        issuers[symbol1] = [];
+      }
+      if(issuer1!="" && issuers[symbol1].indexOf(issuer1)<0) {
+        issuers[symbol1].push(issuer1);
+      }
+      if(symbol2!="" && !(symbol2 in issuers)) {
+        issuers[symbol2] = [];
+      }
+      if(issuer2!="" && issuers[symbol2].indexOf(issuer2)<0) {
+        issuers[symbol2].push(issuer2);
+      }
+    }
+    
     // Parse through the orderbook and turn it into an HTML table
     if(!updateMessageOnly && showOrderbook && orderbook!=null && orderbookExists) {
     
