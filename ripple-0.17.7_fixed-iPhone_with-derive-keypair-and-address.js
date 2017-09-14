@@ -1,3 +1,13 @@
+/* Disclaimer: 
+This is the original ripplelib 0.17.7 but recompiled with the latest version of bignumbers.js dependency to fix freezing issues on iphones/iOS:
+https://github.com/ripple/ripple-lib/issues/762
+
+Additionally, 4 lines were added (marked // pftq) to expose deriveKeyPair and deriveAddress functions to be able to check/validate keys offline without having to sign and get and error first.  These are functions already part of ripplelib and used by signing etc, but not call-able without the added lines to expose them.  See:
+https://github.com/ripple/ripple-lib/issues/770
+
+- pftq
+*/
+
 var ripple =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
