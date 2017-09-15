@@ -608,12 +608,13 @@ function loadAccount(loadOrderbookNext) {
 }
 
 // Custom setTimer function to allow wait-time to change while it's waiting
-function interruptableTimer(functionToCall, waitedSoFar) {
+function interruptableTimer(functionToCall, intervalFunction, waitedSoFar) {
   if(waitedSoFar===undefined || waitedSoFar=='undefined') waitedSoFar = 0;
-  var waitThresh = getInterval();
+  if(intervalFunction===undefined || intervalFunction=='undefined') intervalFunction = getInterval;
+  var waitThresh = intervalFunction();
   if(waitedSoFar<waitThresh) {
     //console.log("Waiting "+waitedSoFar+" / "+waitThresh);
-    setTimeout(function() {interruptableTimer(functionToCall, waitedSoFar+100); }, 100);
+    setTimeout(function() {interruptableTimer(functionToCall, intervalFunction, waitedSoFar+100); }, 100);
   }
   else {
     //console.log("Calling function...");
@@ -624,12 +625,20 @@ function interruptableTimer(functionToCall, waitedSoFar) {
 // Dynamic wait time of the interruptableTimer
 // Set refreshImmediately to true anywhere in the code to end timer immediately
 function getInterval() {
-  if(refreshImmediately) {
+  if(refreshImmediately || updateInterval == 0) {
     refreshImmediately = false;
     //console.log("Forcing refresh immediately...");
     return 1;
   }
   else return updateInterval*1000;
+}
+function getChatInterval() {
+  if(refreshImmediately || currentChatUpdateInterval == 0) {
+    refreshImmediately = false;
+    //console.log("Forcing refresh immediately...");
+    return 1;
+  }
+  else return currentChatUpdateInterval*1000;
 }
 
 // Show/hide misc menu for mobile
@@ -3845,7 +3854,7 @@ function runChat() {
     });
   }
   else {
-    setTimeout(runChat, chatUpdateInterval*1000);
+    interruptableTimer(runChat, getChatInterval);
   }
 }
 
@@ -3900,14 +3909,15 @@ function runChat3(transactions, firstRun) {
   if(firstRun) {
     // avoid querying the same transactions twice
     console.log("Re-traversing first chat retrieval in chronological order...");
-    transactions.reverse();
+    if(transactions!=null) transactions.reverse();
     runChat3(transactions, false);
   }
   else {
     if(!firstRun && !chatLoaded) 
       chatLoaded = true;
     if(currentChatUpdateInterval<chatUpdateInterval) currentChatUpdateInterval+=0.1;
-    setTimeout(runChat, firstRun? 1:currentChatUpdateInterval*1000);
+    interruptableTimer(runChat, getChatInterval);
+    if(firstRun) currentChatUpdateInterval = 0;
   }
 }
 
@@ -4310,10 +4320,9 @@ $(document).ready(function() {
             
             // Kick off chatbox listener
             rescaleChat();
-            if(showChat) {
+            getDisplayName().then(function() {
               runChat();
-            }
-            else getDisplayName();
+            });
             
           }, "json" );
           
