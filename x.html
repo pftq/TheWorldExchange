@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Tech Trader Token - The Fully Autonomous Hedge Fund on Blockchain</title>
+    <meta name="description" content="The Tech Trader Token is a fully autonomous hedge fund issued as a blockchain-based token.">
+    <meta name="keywords" content="Tech Trader, Tech Trader Token, Fully Autonomous Hedge Fund, Fully Autonomous, Hedge Fund, Hedge Fund Token, Blockchain, Token, ICO">
+    <script type="text/javascript" src="jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="jquery-ui.js"></script>
+    <script type="text/javascript" src="lodash.js"></script>
+    <script type="text/javascript" src="ripple-0.17.7_fixed-iPhone_with-derive-keypair-and-address.js"></script>
+    <script type="text/javascript" src="particles.js"></script>
+    <script type="text/javascript" src="20170923.js"></script>
+    <link rel="stylesheet" href="20170920xxxx.css">
+    <link rel="stylesheet" href="jquery-ui.css">
+    <link rel="stylesheet" href="timeline.css">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#a8a8a8">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="theme-color" content="#ffffff">
+</head>
+<body>
+
+<script type='text/javascript'>
+// Configurations
+var symbol = "BTC";
+var issuer = "rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B";
+// note months start at 0, not 1
+var registrationStart = new Date(2017, 9, 1);
+var saleStart = new Date(2017, 10, 1);
+
+// Base currency
+var baseSymbol = "USD";
+var baseIssuer = "rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B";
+</script>
+
+<div id='particles-js'>
+</div>
+
+<div id='container'>
+
+    <form id='form'>
+      <div id='content'>
+      
+        <div id='navigation'>
+          <a href='#about' onclick='jQuery("html,body").animate({scrollTop: jQuery("#about").offset().top}, 500); return false;'>About</a>
+          <a href='#how' onclick='jQuery("html,body").animate({scrollTop: jQuery("#how").offset().top}, 1000); return false;'>Token Sale</a>
+          <a href='#team' onclick='jQuery("html,body").animate({scrollTop: jQuery("#team").offset().top}, 1000); return false;'>Team</a>
+          <a href='#contact' onclick='jQuery("html,body").animate({scrollTop: jQuery("#contact").offset().top}, 1000); return false;'>Connect</a>
+        </div>
+        <div id='countdown'>
+          <div id='registrationBegins'>Registration Begins in: <span id='registrationCount'>0d:0h:0m:0s</span></div>
+          <div id='saleBegins' style='display:none;'>Sale Begins in: <span id='saleCount'>0d:0h:0m:0s</span></div>
+          <div id='saleLive' style='display:none;'>Tokens Sold: <a id='tokenUrl' href='https://www.theworldexchange.net' target='_blank'><span id='tokensIssued'></span></a></div>
+        </div>
+        
+        <div id='title'><div><img src='images/tt.png' alt='Tech Trader' /></div><h1>Tech Trader Token</h1></div>
+        
+        <h2 id='subtitle'>The Fully Autonomous Hedge Fund on Blockchain</h2>
+        
+        <div id='access'>
+        
+          <div id='notification'>
+            <div id='requestNotification'><input class='registerButton' type='submit' value='Subscribe for Updates' onclick='jQuery("html,body").animate({scrollTop: jQuery("#contact").offset().top}, 1000); return false;' /></div>
+            <div class='availability'>Registration will open on <span id='registrationDate'></span>.<br />
+            The token sale will take place on <span id='saleDate'></span>.</div>
+          </div>
+          
+          <div id='registration' style='display:none;'>
+            <div id='register'><input class='registerButton' type='submit' value='Register for Access' onclick='window.location = "register.html"' /></div>
+            <div class='availability'>Only Open to Eligible Non-US Investors</div>
+          </div>
+          
+        </div>
+            
+      </div>
+      
+    </form>
+    
+</div>
+    
+<div id='about' style='position:relative; top:0px; left:0px; margin-top:100px;'>
+  <div style='padding-top:80px;'>
+    <h3>What is the Tech Trader Token?</h3>
+    
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Last year, a startup emerged having created one of the first fully autonomous hedge funds managed entirely by machine.  The technology behind it is called <a href='https://www.techtrader.ai/' target='_blank'>Tech Trader</a>, and it has been trading live capital for over 4 years with no human intervention.  It is fully automated trading in the truest sense, unlike many "automated" or "AI" systems which may have a hundred engineers providing the actual intelligence behind the curtain.  To this day, Tech Trader continues to run with no tweaking or updates by anyone, even posting to its own blog and social media accounts under the handle <a href='https://twitter.com/techtraderai' target='_blank'>@TechTraderAI</a>.  Now the team behind that endeavor is taking things even further by having the fund itself offered on the blockchain, vastly reducing what little human involvement was left in the business.</p>
+    
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Tech Trader Token is a fully autonomous hedge fund issued as a blockchain-based token.  The token will be unlike most before it in that each unit individually tracks a corresponding dollar of value in the fund, regardless of how many tokens are issued.  It is a token backed one-to-one by the real assets and performance of a live already operating business, instead of having its value driven by speculation or scarcity of supply. The token will be offered with an initial soft cap of $100M to eligible non-US investors and be immediately tradable on <a href='https://www.ripple.com/' target='_blank'>Ripple</a>'s built-in decentralized exchange, in essence also creating a hedge fund with 24/7 tradability and liquidity.</p>
+    
+    <!--
+    <section class="timeline">
+      <ol>
+        <li>
+          <div>
+            <time>Oct.2017</time> Registration begins.
+          </div>
+        </li>
+        <li>
+          <div>
+            <time>Nov.2017</time> Token sale begins.
+          </div>
+        </li>
+        <li>
+          <div>
+            <time>Jan.2018</time> Fund goes live.
+          </div>
+        </li>
+        <li></li>
+      </ol>
+    </section>
+    -->
+    
+    <h5 id='how'><a href='#how' style='text-decoration:none; border:0;'>How to Participate in the Token Sale</a></h5>
+    <div id='howContent'>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Tech Trader Token will be issued directly on <a href='https://www.ripple.com/' target='_blank'>Ripple</a> and only be accessible to eligible non-US investors who have completed our registration process.  Due to securities laws, registration is broken into two steps where you must first pass KYC/AML before you can view the fund details and complete the final subscription document.  Once registered, you will be able to buy and sell the Tech Trader Token directly on the Ripple Consensus Ledger (Ripple's blockchain), which is actually also decentralized exchange.  You must have a Ripple account and use a full-functionality Ripple wallet software to access it.  We recommend <a href='https://www.theworldexchange.net/' target='_blank'>TheWorldExchange.net</a>, which, despite the name, is just a free interface that will allow you to create a wallet, fund it, and buy or sell anything directly off of Ripple.</p>
+      <ol>
+      <li>Create and fund a Ripple account using <a href='https://www.theworldexchange.net/' target='_blank'>TheWorldExchange.net</a> or other wallet software. See tutorial <a href='https://www.youtube.com/watch?v=jxdsKYUW4OE&list=PLHAK7FXoElZOyM6MaQ_O_i6ATap2k9r-o&index=1' target='_blank'>here</a>.</li>
+      <li><a href='/' onclick='jQuery("html,body").animate({scrollTop: jQuery("#container").offset().top}, 1000); return false;'>Register</a> to be screened for KYC/AML.</li>
+      <li>Once you pass KYC/AML, you will have access to fund details and subscription form.</li>
+      <li>Once subscription is submitted, add the token to your Trustlines / Receivable Tokens (tutorial <a href='https://youtu.be/n5n7hap0kT4?list=PLHAK7FXoElZOyM6MaQ_O_i6ATap2k9r-o&t=86' target='_blank'>here</a>).  You will then be whitelisted to buy or sell it on your Ripple account (tutorial <a href='https://www.youtube.com/watch?v=RTKVvY3VIZg&index=4&list=PLHAK7FXoElZOyM6MaQ_O_i6ATap2k9r-o&t=90s' target='_blank'>here</a>).</li>
+      </ol>
+      
+      <p style='text-align:center;'>Below are the symbol and issuer address of the token.<br /><b>Make sure to copy the exact issuer address.</b></p>
+      <p style='text-align:center;'>
+      Symbol: <input id='symbol' type='text' readonly='readonly' value='' onclick='this.select();' style='width:10%;' /> 
+      Issuer: <input id='issuer' type='text' readonly='readonly' value='' onclick='this.select();' style='width:30%;' />
+      </p>
+      <p style='text-align:center;'>If using TheWorldExchange.net, a direct link is below:<br />
+      <a id='directLink' href='https://www.theworldexchange.net/' target='_blank'>TheWorldExchange.net</a></p>
+      
+      <p style='text-align:center;'>The token can be purchased with anything on Ripple, 
+      including USD, EUR, BTC, ETH, and XRP.  For amounts over $100,000 USD, 
+      <a href='mailto:techtrader@techtrader.io?subject=Direct%20Wire' target='_blank'>contact us</a> to arrange direct wire or swap.</p>
+    </div>
+    
+    <h5 id='team'><a href='#team' style='text-decoration:none; border:0;'>The Team</a></h5>
+    <div class='logos'>
+      <div><div class='crop'><a href='https://www.techtrader.ai/' target='_blank'><img src='images/tt.jpg' alt='Tech Trader' /></a></div><a href='https://www.techtrader.ai/' target='_blank'>Tech Trader</a></div>
+    </div>
+    <p>&nbsp;</p>
+    
+    <h5 id='partners'><a href='#partners' style='text-decoration:none; border:0;'>Strategic Partners</a></h5>
+    <div class='logos'>
+      <div class='crop'><a href='https://www.autodidactic.ai/' target='_blank'><img src='images/ai.jpg' alt='Autodidactic I' /></a></div>
+      <div class='floatedLogosMain'>
+      <div class='floatedLogosSub'>
+        <div class='inlineLogos'><a href='http://colefrieman.com/' target='_blank'><img src='images/cf.jpg' alt='Cole-Frieman &amp; Mallon LLP' /></a></div>
+        <div class='inlineLogos'><a href='http://www.harneys.com/' target='_blank'><img src='images/harneys.jpg' alt='Harneys' /></a></div>
+        <div class='inlineLogos'><a href='http://www.arthurbellcpas.com/' target='_blank'><img src='images/ab.jpg' alt='Arthur Bell' /></a></div>
+        <div class='inlineLogos'><a href='http://www.cowen.com/capabilities/execution-services/' target='_blank'><img src='images/cowen.jpg' alt='Cowen Execution Services' /></a></div>
+      </div>
+      </div>
+    </div>
+    <div style=' clear:both;'>
+    </div>
+    
+    <h5 id='contact'><a href='#contact' style='text-decoration:none; border:0;'>Connect</a></h5>
+    <div id='contactContent'>
+      <p style='text-align:center;'>Email: <a href='mailto:techtrader@techtrader.io' target='_blank'>techtrader@techtrader.io</a></p>
+      <p style='text-align:center;'>BitcoinTalk: <a href='https://bitcointalk.org/index.php?action=profile;u=1143911' target='_blank'>TechTraderToken</a></p>
+      <p style='text-align:center;'>Reddit: <a href='https://www.reddit.com/r/TechTraderToken/' target='_blank'>TechTraderToken</a></p>
+      <p style='text-align:center;'>Slack: <a href='https://techtradertoken.slack.com/' target='_blank'>TechTraderToken</a></p>
+      <p style='text-align:center;'>Twitter: <a href='https://www.twitter.com/TechTraderToken/' target='_blank'>@TechTraderToken</a></p>
+      <p>&nbsp;</p>
+      
+      <p style='text-align:center;'>Subscribe for Updates:<br />
+      
+      <!-- Begin MailChimp Signup Form -->
+      <div id="mc_embed_signup">
+      <form action="//techtrader.us16.list-manage.com/subscribe/post?u=f4cb1b3d57f2e834c77758003&amp;id=e3e38a150e" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+          <div id="mc_embed_signup_scroll" style='text-align:center;'>
+        
+            <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Enter your email..." style='width:300px; margin-bottom:5px;' required>
+            <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+            <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f4cb1b3d57f2e834c77758003_e3e38a150e" tabindex="-1" value=""></div>
+            <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+          </div>
+      </form>
+      </div>
+
+  <!--End mc_embed_signup-->
+
+      </p>
+    </div>
+    
+    
+    <div id='bottom' >
+      <p style='text-align:right; padding-top:5%;'><a href='/' onclick='jQuery("html,body").animate({scrollTop: jQuery("#container").offset().top}, 1000); return false;'>[ Back to the Top ]</a></p>
+      
+      <div id='footer'>© 2017 The Tech Trader Token LLC.  All rights reserved.</div>
+    </div>
+    
+  </div>
+</div>
+    
+
+<!-- Google Analytics for anonymous metrics on site usage -->
+<!-- Global Site Tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-106607701-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-106607701-1');
+</script>
+
+
+</body>
+</html>
