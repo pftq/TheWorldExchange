@@ -306,13 +306,13 @@ a:hover{
 }
 
 .trustlineFields{
-  height: 180px;
+  max-height: 180px;
   overflow:auto;
   width:100%;
 }
 
 .advancedSettings{
-  height: 225px;
+  max-height: 225px;
   overflow:auto;
   width:100%;
 }
@@ -727,10 +727,10 @@ a:hover{
   }
   
   .trustlineFields{
-    height: 400px;
+    max-height: 400px;
   }
   .advancedSettings{
-    height: 300px;
+    max-height: 300px;
   }
 
 }
