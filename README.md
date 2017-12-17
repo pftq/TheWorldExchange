@@ -1,7 +1,7 @@
 # The World Exchange
 www.theworldexchange.net
 
-Very simple, "vanilla" site demonstrating much of Ripple/XRP's capabilities through their API, including but not limited to:
+Very simple, "vanilla" 100% HTML client-side-only site demonstrating much of Ripple/XRP's capabilities through their API, including but not limited to:
 - Trading of symbols (buy/sell)
 - Issuing new symbols, including Ripple's KYC features like allowing only authorized token holders.
 - Sending/receiving symbols
