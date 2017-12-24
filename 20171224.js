@@ -3902,10 +3902,8 @@ function runChat() {
           runChat2(transactions, 0, firstRun);
         
     }, function(err) {
-      if(false && err=="[MissingLedgerHistoryError(Server is missing ledger history in the specified range)]") {
-        if(firstRun)
-          printChat("No messages found.");
-        
+      if(firstRun && err=="[MissingLedgerHistoryError(Server is missing ledger history in the specified range)]") {
+          printChat("No messages. Network may be currently busy.");
       }
       else console.log("Chat retrieval error: "+err);
       
@@ -3978,6 +3976,7 @@ function runChat3(transactions, firstRun) {
   if(firstRun) {
     // avoid querying the same transactions twice
     console.log("Re-traversing first chat retrieval in chronological order...");
+    if(newMsgs==0) printChat("No messages. Network may be currently busy.");
     if(transactions!=null) transactions.reverse();
     runChat3(transactions, false);
   }
