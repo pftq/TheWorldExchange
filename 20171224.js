@@ -3841,11 +3841,10 @@ function runChat() {
   if(showChat) { // download chat only if the box is showing and enabled
   
     var firstRun = false;
-    var options = {earliestFirst:true, initiated:false, limit:10, types:["payment"]};
+    var options = {earliestFirst:true, initiated:false, limit:5, types:["payment"]};
     if(lastChat!="") {
       if(lastChat!=null) {
         options.start=lastChat;
-        options.limit = 10;
       }
     }
     else { // only first time page runs do we show this
@@ -3944,8 +3943,10 @@ function runChat2(transactions, i, firstRun) {
 // Print chat messages
 function runChat3(transactions, firstRun) {
   console.log("Processing chat transactions...");
+  var newMsgs = 0;
   if(transactions!=null) {
     console.log("Found "+transactions.length+" chat transactions...");
+    newMsgs = transactions.length;
     for(var i = 0; i<transactions.length; i++) {
       if(firstRun) {
         console.log("Skipping to earliest chat in query for first pass...");
@@ -3985,8 +3986,11 @@ function runChat3(transactions, firstRun) {
       chatLoaded = true;
     }
     
-    if(currentChatUpdateInterval<chatUpdateInterval) 
+    if(newMsgs>0) // Refresh burst to process any additional messages beyond this
+      currentChatUpdateInterval = 0.5;
+    else
       currentChatUpdateInterval=chatUpdateInterval;
+      
     interruptableTimer(runChat, getChatInterval);
     //if(firstRun) currentChatUpdateInterval = 0;
     console.log("Chat refresh in "+getChatInterval()/1000+" seconds.");
