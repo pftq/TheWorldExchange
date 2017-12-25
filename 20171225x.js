@@ -3989,8 +3989,8 @@ function runChat3(transactions, firstRun) {
   }
   else {
     
-    
-    if(chatLoaded && newMsgs>0) // Refresh burst to process any additional messages beyond this
+    if(firstRun) currentChatUpdateInterval = chatUpdateInterval;
+    else if(chatLoaded && newMsgs>0) // Refresh burst to process any additional messages beyond this
       currentChatUpdateInterval = 0;
     else if(currentChatUpdateInterval<chatUpdateInterval)
       currentChatUpdateInterval+=2;
