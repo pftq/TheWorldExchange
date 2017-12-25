@@ -3988,15 +3988,17 @@ function runChat3(transactions, firstRun) {
     runChat3(transactions, false);
   }
   else {
+    
+    
+    if(chatLoaded && newMsgs>0) // Refresh burst to process any additional messages beyond this
+      currentChatUpdateInterval = 0;
+    else if(currentChatUpdateInterval<chatUpdateInterval)
+      currentChatUpdateInterval+=2;
+     
     if(!firstRun && !chatLoaded) {
       chatLoaded = true;
     }
-    
-    if(newMsgs>0) // Refresh burst to process any additional messages beyond this
-      currentChatUpdateInterval = 0;
-    else if(currentChatUpdateInterval<chatUpdateInterval)
-      currentChatUpdateInterval+=1;
-      
+     
     interruptableTimer(runChat, getChatInterval, 0, "chat");
     //if(firstRun) currentChatUpdateInterval = 0;
     console.log("Chat refresh in "+getChatInterval()/1000+" seconds.");
