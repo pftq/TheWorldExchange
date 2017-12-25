@@ -4145,7 +4145,7 @@ function chatFullScreen() {
   }
   else { // full right side
     $("#chatbox").css("width", ($("#container").width()-($("#container").width()-($("#form").offset().left+$("#form").width()))-$("#submit").width()-$("#submit").offset().left)*.7);
-    $("#chatbox").css("height", ($("#container").height()-($("#subnavigation").offset().top + $("#subnavigation").height()))*.98);
+    $("#chatbox").css("height", ($("#container").height()-($("#subnavigation").offset().top/* + $("#subnavigation").height()*/))*.98);
     $("#chatbox").css("right", $("#container").width()-($("#form").offset().left+$("#form").width()) );
     $("#chatbox").css("bottom", $("#container").height()-($("#form").offset().top + $("#form").height()) );
     $("#chatbox").css("top", "auto" );
