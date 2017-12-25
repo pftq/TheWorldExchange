@@ -2923,7 +2923,7 @@ function getDisplayName(addressRequest) {
 // Pull full history of Display Names - sounds slow but might be faster if pulling many in bulk instead of one at a time
 function getAllDisplayNames(exitFunction, startIndex) {
   
-  var options = {earliestFirst:true, initiated:false, limit:100, types:["payment"]};
+  var options = {earliestFirst:true, initiated:false, limit:20, types:["payment"]};
   if(startIndex!=undefined && startIndex!='undefined' && startIndex!='') {
     options.start=startIndex;
     console.log("Retrieving Ripple Display Names... #"+startIndex);
@@ -3860,7 +3860,7 @@ function runChat() {
       lastChat = null; // so we go to the block above next time but still don't have an ID
       firstRun = true;
       options.earliestFirst = false;
-      options.limit = 100;
+      options.limit = 20;
     }
     if(firstRun) {
       $("#chatHistoryContents").append("Retrieving chat messages...");
