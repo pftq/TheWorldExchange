@@ -3993,9 +3993,9 @@ function runChat3(transactions, firstRun) {
     }
     
     if(newMsgs>0) // Refresh burst to process any additional messages beyond this
-      currentChatUpdateInterval = 0.01;
-    else
-      currentChatUpdateInterval=chatUpdateInterval;
+      currentChatUpdateInterval = 0;
+    else if(currentChatUpdateInterval<chatUpdateInterval)
+      currentChatUpdateInterval+=1;
       
     interruptableTimer(runChat, getChatInterval, 0, "chat");
     //if(firstRun) currentChatUpdateInterval = 0;
