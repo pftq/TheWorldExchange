@@ -2925,9 +2925,11 @@ function getDisplayName(addressRequest) {
 function getAllDisplayNames(exitFunction, startIndex) {
   
   var options = {earliestFirst:true, initiated:false, limit:100, types:["payment"]};
+  var usingDataAPI = false;
   if(startIndex!=undefined && startIndex!='undefined' && startIndex!='') {
     options.start=startIndex;
     console.log("Retrieving Ripple Display Names... #"+startIndex);
+    if(startIndex.indexOf("|")>=0) usingDataAPI=true;
   }
   else console.log("Retrieving All Ripple Display Names... ");
   
@@ -2960,7 +2962,7 @@ function getAllDisplayNames(exitFunction, startIndex) {
   }, function(er) { console.log("Error in getDisplayName reconnection: "+er); return null; }).then(function() {
     
     // Retrieve transactions of the names wallet as names storage
-    if(namesAPI.isConnected())
+    if(!usingDataAPI && namesAPI.isConnected())
       return namesAPI.getTransactions(namesWallet, options );
     else return null;
     
@@ -2979,8 +2981,8 @@ function getAllDisplayNames(exitFunction, startIndex) {
 
 function getDisplayNamesDataAPI(startIndex, options, transactions, exitFunction) {
   transactions = [];
-  options.limit=5;
-  var url = dataAPI+"/v2/accounts/"+namesWallet+"/transactions?type=Payment&result=tesSUCCESS&descending=true&limit="+options.limit;
+  options.limit=2;
+  var url = dataAPI+"/v2/accounts/"+namesWallet+"/transactions?type=Payment&result=tesSUCCESS&limit="+options.limit+(startIndex!=undefined && startIndex!='undefined' && startIndex!=''? "&marker="+options.start:"");
   console.log("No transactions from Ripple network for display names. Trying dataAPI: "+url);
    	
   $.ajax({
@@ -2992,14 +2994,18 @@ function getDisplayNamesDataAPI(startIndex, options, transactions, exitFunction)
         console.log(data);
         if(data!=null && data.transactions!=null) {
           for(var i=0; i<data.transactions.length; i++) {
-            if(data.transactions[i].tx.Destination!=namesWallet) continue;
+          
+            //if(data.transactions[i].tx.Destination!=namesWallet) continue;
+            
             var obj = {
               id:data.transactions[i].hash,
+              marker:data.marker,
               outcome:{timestamp:new Date(data.transactions[i].date).getTime()},
               address:data.transactions[i].tx.Account,
-              specification:{memos:[]}
+              specification:{memos:null}
             };
             if(data.transactions[i].tx.Memos!=null) {
+              obj.specification.memos = [];
               for(var j=0; j<data.transactions[i].tx.Memos.length; j++) {
                 if(data.transactions[i].tx.Memos[j].Memo!=null && data.transactions[i].tx.Memos[j].Memo.MemoData!=null)
                   obj.specification.memos[obj.specification.memos.length]={data:decodeHex(data.transactions[i].tx.Memos[j].Memo.MemoData)};
@@ -3008,8 +3014,8 @@ function getDisplayNamesDataAPI(startIndex, options, transactions, exitFunction)
             transactions[transactions.length]=obj;
           }
         }
-        if(options.earliestFirst) transactions.reverse();
-        options.limit = transactions.length+1; // stop the loop because you can't iterate through DataAPI
+        
+        //options.limit = transactions.length+1; // stop the loop because you can't iterate through DataAPI
         getDisplayNamesParse(startIndex, options, transactions, exitFunction);
       }
       catch (err) { 
@@ -3056,7 +3062,7 @@ function getDisplayNamesParse(startIndex, options, transactions, exitFunction) {
         }
       }
       if(transactions.length>=options.limit)
-        getAllDisplayNames(exitFunction, startIndex); // get next batch if this one was full
+        getAllDisplayNames(exitFunction, (transactions[0].marker!=undefined && transactions[0].marker!='undefined' && transactions[0].marker!=null? transactions[0].marker:startIndex)); // get next batch if this one was full
       else {
         console.log("No more transactions for getAllDisplayNames.");
         exitFunction();
@@ -3998,9 +4004,10 @@ function runChat1DataAPI(options, transactions, firstRun) {
               id:data.transactions[i].hash,
               outcome:{timestamp:new Date(data.transactions[i].date).getTime()},
               address:data.transactions[i].tx.Account,
-              specification:{memos:[]}
+              specification:{memos:null}
             };
             if(data.transactions[i].tx.Memos!=null) {
+              obj.specification.memos = [];
               for(var j=0; j<data.transactions[i].tx.Memos.length; j++) {
                 if(data.transactions[i].tx.Memos[j].Memo!=null && data.transactions[i].tx.Memos[j].Memo.MemoData!=null)
                   obj.specification.memos[obj.specification.memos.length]={data:decodeHex(data.transactions[i].tx.Memos[j].Memo.MemoData)};
