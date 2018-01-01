@@ -4079,7 +4079,6 @@ function runChat3(transactions, firstRun) {
           lastChat = transactions[i].id;
           lastChatTime = transactions[i].outcome.timestamp;
         }
-        newMsgs++;
         
         // print the earliest one (last one) on the first loop because it'll be skipped by options.start in the future
         if((!firstRun || i==transactions.length-1) && transactions[i].address!=null && transactions[i].specification!=null 
@@ -4090,6 +4089,8 @@ function runChat3(transactions, firstRun) {
             
             printChat("<b>" + formatDate(new Date(transactions[i].outcome.timestamp))+"</b> - "+(transactions[i].address in displayName && displayName[transactions[i].address]!=""? "<b>"+displayName[transactions[i].address]+" </b> ("+transactions[i].address+")":"<b>"+transactions[i].address+"</b>")+":<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+stripHTML(transactions[i].specification.memos[0].data));
             //console.log(formatDate(new Date(transactions[i].outcome.timestamp))+": "+transactions[i].id);
+            
+            newMsgs++;
           }
       }
       catch(ex) {
