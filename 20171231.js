@@ -4078,6 +4078,7 @@ function runChat3(transactions, firstRun) {
         else {
           lastChat = transactions[i].id;
           lastChatTime = transactions[i].outcome.timestamp;
+          console.log(formatDate(new Date(lastChatTime))+": #"+lastChat);
         }
         
         // print the earliest one (last one) on the first loop because it'll be skipped by options.start in the future
@@ -4088,7 +4089,6 @@ function runChat3(transactions, firstRun) {
             if(!chatLoaded && !(transactions[i].address in displayName)) displayName[transactions[i].address] = ""; // prevent look-up later because we already know they don't have a name
             
             printChat("<b>" + formatDate(new Date(transactions[i].outcome.timestamp))+"</b> - "+(transactions[i].address in displayName && displayName[transactions[i].address]!=""? "<b>"+displayName[transactions[i].address]+" </b> ("+transactions[i].address+")":"<b>"+transactions[i].address+"</b>")+":<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+stripHTML(transactions[i].specification.memos[0].data));
-            //console.log(formatDate(new Date(transactions[i].outcome.timestamp))+": "+transactions[i].id);
             
             newMsgs++;
           }
