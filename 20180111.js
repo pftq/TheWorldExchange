@@ -1303,8 +1303,8 @@ function loadOrderbook(updateMessageOnly, repeat) {
           errored=true;
           var qrsize = 196;
           if(isMobile()) qrsize = 256;
-          $("#errors").html("Send to others by inputting their account address above.<br />For non-XRP, make sure they set their <a href='#' onclick='aboutReceivables(); return false;'>Receivable Tokens</a> list.<br /><br />To receive or let others send to you, share the below link or QR Code:<br /><input type='text' value='https://www.theworldexchange.net/?action=send&amp;recipient="+address+($("#qty1").val()==""? "":"&amp;qty1="+$("#qty1").val())+($("#symbol1").val()==""? "":"&amp;symbol1="+$("#symbol1").val()+(issuer1==""? "":"."+issuer1))+"' onclick='this.select();' readonly='readonly' class='linkShare' /><br /><br /><div id='qrcode' style='text-align:center; margin:auto; width:"+qrsize+"px;'> </div>"+(address==""? "<br />(Note: <a href='#' onclick='showLogin();'>Login</a> first to get a valid link/QR with your address.)":""));
-          new QRCode(document.getElementById("qrcode"), {text:"https://www.theworldexchange.net/?action=send&recipient="+address+($("#qty1").val()==""? "":"&qty1="+$("#qty1").val())+($("#symbol1").val()==""? "":"&symbol1="+$("#symbol1").val()+(issuer1==""? "":"."+issuer1)), width:qrsize, height:qrsize});
+          $("#errors").html("Send to others by inputting their account address above.<br />For non-XRP, make sure they set their <a href='#' onclick='aboutReceivables(); return false;'>Receivable Tokens</a> list.<br /><br />To receive or let others send to you, share the below link or QR Code:<br /><input type='text' value='https://www.theworldexchange.net/?action=send&amp;recipient="+address+(destTag==""? "":"&amp;destTag="+destTag)+($("#qty1").val()==""? "":"&amp;qty1="+$("#qty1").val())+($("#symbol1").val()==""? "":"&amp;symbol1="+$("#symbol1").val()+(issuer1==""? "":"."+issuer1))+"' onclick='this.select();' readonly='readonly' class='linkShare' /><br /><br /><div id='qrcode' style='text-align:center; margin:auto; width:"+qrsize+"px;'> </div>"+(address==""? "<br />(Note: <a href='#' onclick='showLogin();'>Login</a> first to get a valid link/QR with your address.)":""));
+          new QRCode(document.getElementById("qrcode"), {text:"https://www.theworldexchange.net/?action=send&recipient="+address+(destTag==""? "":"&destTag="+destTag)+($("#qty1").val()==""? "":"&qty1="+$("#qty1").val())+($("#symbol1").val()==""? "":"&symbol1="+$("#symbol1").val()+(issuer1==""? "":"."+issuer1)), width:qrsize, height:qrsize});
           refreshLayout();
       }
       else refreshLayout();
@@ -1507,7 +1507,7 @@ function loadOrderbook(updateMessageOnly, repeat) {
 
 // The help text after you issued a token
 function getIssuedText() {
-  return "Share the below link to let others trade your "+symbol1+" token:<br /><input type='text' value='https://www.theworldexchange.net/?symbol1="+symbol1+"."+address+"&amp;symbol2="+symbol2+"."+issuer2+"' onclick='this.select();' readonly='readonly' class='linkShare' /><br /><br />For next steps if doing an actual sale or ICO, such as legal docs, see: <br /><a href='#ico' onclick='document.getElementById(\"about\").style.display=\"block\"; setURL(\"#ico\"); jQuery(\"html,body\").animate({scrollTop: jQuery(\"#ico\").offset().top}, 1000); return false;'>How to Create a Token Offering (ICO / ITO)</a><br /><br />"+(settings["defaultRipple"]? "Your settings allow token holders to both trade and send to others.<br />To disallow sending so users can only trade in the open market, click <a href='#' onclick='updateDefaultRipple(false);'>here</a>.":"Your settings only allow token holders to trade but not send to others.<br />To allow users to send to others as well, click <a href='#' onclick='updateDefaultRipple(true);'>here</a>.");
+  return "Share the below link to let others trade your "+symbol1+" token:<br /><input type='text' value='https://www.theworldexchange.net/?symbol1="+symbol1+"."+address+"&amp;symbol2="+symbol2+"."+issuer2+"' onclick='this.select();' readonly='readonly' class='linkShare' /><br /><br />"+(settings["defaultRipple"]? "Your settings allow token holders to both trade and send to others.<br />To disallow sending so users can only trade in the open market, click <a href='#' onclick='updateDefaultRipple(false);'>here</a>.":"Your settings only allow token holders to trade but not send to others.<br />To allow users to send to others as well, click <a href='#' onclick='updateDefaultRipple(true);'>here</a>.");
 }
 
 // Update the URL depending on what we put in the forms
@@ -4475,7 +4475,7 @@ $(document).ready(function() {
     
     // Smooth scroll the screen for page anchors
     var hashTag = window.location.hash;
-    if (hashTag === "#about" || hashTag=="#instant" || hashTag=="#represent" || hashTag=="#global" || hashTag.indexOf("#started")>=0 || hashTag=="#works" || hashTag=="#reading" || hashTag=="#ico") {
+    if (hashTag === "#about" || hashTag=="#instant" || hashTag=="#represent" || hashTag=="#global" || hashTag.indexOf("#started")>=0 || hashTag=="#works" || hashTag=="#reading") {
       $("#about").css("display", "block");
       jQuery("html,body").animate({scrollTop: jQuery(hashTag).offset().top}, 1000);
     }
