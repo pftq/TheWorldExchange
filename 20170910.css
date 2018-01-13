@@ -106,6 +106,9 @@ a:hover{
   text-decoration:underline;
   border-color: transparent;
 }
+a:active{
+  text-decoration:none;
+}
 
 
 #infoBar {float:left; width:400px; margin-right:-400px; font-size:12pt; text-align:left; }
