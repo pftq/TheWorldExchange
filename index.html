@@ -12,8 +12,8 @@
     <script type="text/javascript" src="ripple-0.17.9_with-derive-keypair-and-address.js"></script>
     <script type="text/javascript" src="particles.js"></script>
     <script type="text/javascript" src="qrcode.js"></script>
-    <script type="text/javascript" src="20180116.js"></script>
-    <link rel="stylesheet" href="20170910.css">
+    <script type="text/javascript" src="20180302.js"></script>
+    <link rel="stylesheet" href="20180302.css">
     <link rel="stylesheet" href="jquery-ui.css">
     
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
@@ -74,8 +74,31 @@
     </table>
     </div>
     
+    <div id='profilebox' style='display:none;'>
+      <div id='profileboxAnnouncement'>
+        <div id='hideProfile' style='float:right;'><a href='#' onclick='hideProfilebox();'>[Hide]</a></div>
+        <div>Official Profile <span style='display:none;'>for <b><span id='profileSymbol'>XRP</span></b> </span>by <b><span id='profileboxIssuer'>Ripple</span></b> <a href='#' id='editProfileName' onclick='showDisplayName();' style='display:none; white-space:nowrap;'>[Edit Name]</a></div>
+      </div>
+      <div id='profileboxInner'>
+        
+        <div id='profileboxContents'>
+        
+        </div>
+        <div id='profileboxFooter'>
+        <hr />
+        <div style='text-align:center; font-style:italic;'>Posted directly on blockchain by the issuer and cannot be forged.</div>
+        <hr />
+        <span id='editProfile' style='display:none;'><a href='#' onclick='showProfileSettings();' style='white-space:nowrap'>[Edit Post]</a> | </span> Last updated: <span id='profileboxDate'></span>
+        </div>
+      </div>
+    </div>
+    
     <div id='chatbox' style='display:none;'>
       <div id='chatHeader'>
+        <div id='hideChat' style='float:right;'><a href='#' onclick='hideChatbox();'>[Hide]</a></div>
+        <div id='chatTitle'>
+        The World Exchange Chat Box
+        </div>
         <div id='chatSettings' style='display:none;'>
         Your Display Name: <a id='displayName' href='#' onclick='showDisplayName();'>&lt; Click Here to Set &gt;</a>
         </div>
@@ -195,7 +218,18 @@
         <div><input id='setDisplayNameSubmit' name='setDisplayNameSubmit' type='submit' value='Submit' /><input id='setDisplayNameCancel' name='setDisplayNameCancel' type='submit' value='Cancel' /></div>
         <div id='setDisplayNameInfo' class='disclaimer'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Using the above setting, you can assign a display name to your Ripple account for others to see instead of the your public account address.  This works the same way as The World Exchange Chat Box by submitting a minimal transaction of 0.000001 XRP to a designated Ripple Display Names address with text attached.  The text attached here would be your display name (instead of chat).<br />
         <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is essentially a revival of the no-longer-supported <a href='https://ripple.com/dev-blog/introducing-ripple-names/' target='_blank'>Ripple Names</a>, except it is now stored decentralized on Ripple itself.  The Ripple Display Name is immediately visible across any other site or interface that supports this protocol, such as for issuer / backer names and The World Exchange Chat Box on this site.  <br />
-        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Any other site or interface which wants to support this display name can do so by reading the memo attached to the latest transaction sent from your public account address to the Ripple Display Names address: <span id='rippleDisplayNameAddress'> </span> <br />(but make sure to only accept the first person who claims the same name)
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Any other site or interface which wants to look up your display name directly on the blockchain can do so by reading the memo attached to the latest transaction sent from your public account address to the Ripple Display Names address: <span id='rippleDisplayNameAddress'> </span> <br />(but make sure to only accept the first person who claims the same name)
+        </div>
+      </div>
+    </div>
+    
+    <div id='setProfile' class='popup' style='display:none;'>
+      <div id='setProfileContents'>
+        <h3>Edit Your Profile Info</h3>
+        <textarea class='settings issuerSettings' id='setProfileInput' name='setProfileInput' value='' placeholder='Enter information about yourself and the symbols issue, as well as anything you want to tell the public...' /></textarea>
+        <div><input id='setProfileSubmit' name='setProfileSubmit' type='submit' value='Submit' /><input id='setProfileCancel' name='setProfileCancel' type='submit' value='Cancel' /></div>
+        <div id='setProfileInfo' class='disclaimer'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As an issuer, you can create a Ripple profile to describe yourself and the symbols you issue.  It's also a secure way for people to know that the information here is only from you, the issuer, as no one else can sign a transaction with your Ripple address.  Behind the scenes, this works the same way as The World Exchange Chat Box by submitting a minimal transaction of 0.000001 XRP to a designated Ripple Profiles address with text attached.  The text attached here would be your profile information (instead of chat).<br />
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Ripple Profile is immediately visible across any other site or interface that supports this protocol, such as for issuer / backer names and The World Exchange Chat Box on this site.  Any other site or interface which wants to look up your profile directly on the blockchain can do so by reading the memo attached to the latest transaction sent from your public account address to the Ripple Profiles address: <span id='rippleProfileAddress'> </span>
         </div>
       </div>
     </div>
@@ -295,7 +329,7 @@
       <div>© 2016 <a href='/'>WorldX LLC</a> | <a target='_blank' href='mailto:contact@theworldexchange.net'>Contact@TheWorldExchange.Net</a> | Follow: <a target='_blank' href='https://twitter.com/WorldExchangeX'>@WorldExchangeX</a></div>
       <div>A Purely Client-Side Wallet and Decentralized Exchange Showcasing the Full Potential of Ripple and Blockchain</div>
       <div>Created by <a href="https://www.pftq.com/blabberbox/?page=The_True_Potential_of_Ripple_and_XRP" target="_blank">pftq</a> of <a href='https://www.autodidactic.ai' target='_blank'>Autodidactic I</a>
-       - Powered by <a target='_blank' href='https://en.wikipedia.org/wiki/Ripple_(payment_protocol)'>Ripple Ledger</a> - Open-Sourced on <a href='https://github.com/pftq/TheWorldExchange' target='_blank'>Github</a> (v.2018/01/16)</div>
+       - Powered by <a target='_blank' href='https://en.wikipedia.org/wiki/Ripple_(payment_protocol)'>Ripple Ledger</a> - Open-Sourced on <a href='https://github.com/pftq/TheWorldExchange' target='_blank'>Github</a> (v.2018/03/02)</div>
        <br />
       </div>
       
