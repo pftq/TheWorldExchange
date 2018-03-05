@@ -1988,7 +1988,6 @@ function rescaleWindow(resizeChat) {
   
   if(resizeChat && showChat) {
     rescaleChat();
-    showProfilebox();
     resetProfileSize();
   }
 }
