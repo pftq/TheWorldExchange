@@ -1,5 +1,4 @@
 # The World Exchange
-www.theworldexchange.net
 
 Very simple, "vanilla" 100% HTML client-side-only site demonstrating much of Ripple/XRP's capabilities through their API, including but not limited to:
 - Trading of symbols (buy/sell)
@@ -12,7 +11,7 @@ Very simple, "vanilla" 100% HTML client-side-only site demonstrating much of Rip
 
 This project/site is nothing more than a single HTML page calling already existing functionality on Ripple's blockchain network.  No additional feature or functionality is added by this site.  It is analogous to the client-side HTML page for Ethereum called MyEtherWallet, except the underlying blockchain here has built-in exchange issuance, trading, and compliance functionality.  As a precaution, we are no longer hosting the site online until there is more clarity from the SEC on what constitutes operating an exchange vs just providing a proof-of-concept interface to existing blockchain functionality (which is what this project is actually doing - analogous to a 3rd party mobile app or trading tool connecting to existing stock brokers/exchanges but not actually being an exchange itself nor processing any transactions).
 
-This project can be downloaded via Github's "Download as Zip" to use, customize, or incorporate into your own Ripple-related projects; to launch the page, just open the index.html file in any browser with javascript enabled.  You can also use Github's HTML-Preview function to browse directly here: https://htmlpreview.github.io/?https://github.com/pftq/TheWorldExchange/blob/master/index.html
+This project can be downloaded via Github's "Download as Zip" to use, customize, or incorporate into your own Ripple-related projects; to launch the page, just open the index.html file in any browser with javascript enabled.  You can also use Github's HTML-Preview function here: https://htmlpreview.github.io/?https://github.com/pftq/TheWorldExchange/blob/master/index.html
 
 We welcome others to improve on the code, share, and use as they see fit.  The site already is and always has been open-source by the fact that it's just pure HTML/Javascript, which anyone can right-click the page while viewing and see the source on.  At the very least, it should serve as a helpful working example for much of Ripple's API functionality, which has been around since 2014 but lacks the tools and UIs of other blockchain ecosystems.
 
