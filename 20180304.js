@@ -1577,12 +1577,18 @@ function getIssuedText() {
 
 // Update the URL depending on what we put in the forms
 function updateURL() {
-  history.pushState(null, null, "/?"+(action=="buy"? "":"action="+action+"&")+"symbol1="+symbol1+(issuer1=="" || symbol1==""? "":"."+issuer1)+($("#qty1").val()==""? "":"&qty1="+$("#qty1").val())+(action=="send"? ($("#recipient").val()==""? "":"&recipient="+$("#recipient").val())+(destTag==""? "":"&destTag="+destTag):"&symbol2="+symbol2+(issuer2=="" || symbol2==""? "":"."+issuer2)+($("#price").val()!=""? "&price="+$("#price").val():"")));
+  try {
+    history.pushState(null, null, "/?"+(action=="buy"? "":"action="+action+"&")+"symbol1="+symbol1+(issuer1=="" || symbol1==""? "":"."+issuer1)+($("#qty1").val()==""? "":"&qty1="+$("#qty1").val())+(action=="send"? ($("#recipient").val()==""? "":"&recipient="+$("#recipient").val())+(destTag==""? "":"&destTag="+destTag):"&symbol2="+symbol2+(issuer2=="" || symbol2==""? "":"."+issuer2)+($("#price").val()!=""? "&price="+$("#price").val():"")));
+  }
+  catch { }
 }
 
 // Set the URL to something specific
 function setURL(url) {
-  history.pushState(null, null, "/"+url);
+  try {
+    history.pushState(null, null, "/"+url);
+  }
+  catch { }
 }
 
 // Refresh state variables when the action is changed
