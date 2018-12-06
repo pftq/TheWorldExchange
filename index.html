@@ -12,7 +12,7 @@
     <script type="text/javascript" src="ripple-0.17.9_with-derive-keypair-and-address.js"></script>
     <script type="text/javascript" src="particles.js"></script>
     <script type="text/javascript" src="qrcode.js"></script>
-    <script type="text/javascript" src="20180304.js"></script>
+    <script type="text/javascript" src="20181206.js"></script>
     <link rel="stylesheet" href="20180304.css">
     <link rel="stylesheet" href="jquery-ui.css">
     
@@ -41,7 +41,7 @@
     <div><b>Learn More:</b> <a href='#about' onclick='document.getElementById("about").style.display="block"; setURL("#about"); jQuery("html,body").animate({scrollTop: jQuery("#about").offset().top}, 1000); return false;'>What is The World Exchange?</a></div>
     </div>
     <div id='navigation'>
-    <span id='yourAccount' style='display:none;'>Your Account: <input id='account' type='text' readonly='readonly' value='' placeholder='Enter your account address here...' /></span><span id='welcome'>Welcome, <a href='#' onclick='showLogin();'>Login or Create a Ripple Account</a></span>
+    <span id='yourAccount' style='display:none;'>Your Account: <input id='account' type='text' readonly='readonly' value='' placeholder='Enter your account address here...' /></span><span id='welcome'>Welcome, <a href='#' onclick='showLogin(); return false;'>Login or Create a Ripple Account</a></span>
     </div>
     
     <!--<div id='tutorials'>
@@ -62,14 +62,14 @@
     <tr><td><div id='ordersLabel' style='visibility:hidden; display:none;'>Orders:</div></td><td><div id='orders' style='float:right;'></div></td></tr>
     <tr><td colspan='2'>
     <div id='controlMiscMenu'>
-      <a id='showMiscMenu' href='#' onclick='showMiscMenu();'> + + + Show Menu + + + </a>
-      <a id='hideMiscMenu' href='#' style='display:none;' onclick='hideMiscMenu();'> - - - Hide Menu - - - </a>
+      <a id='showMiscMenu' href='#' onclick='showMiscMenu(); return false;'> + + + Show Menu + + + </a>
+      <a id='hideMiscMenu' href='#' style='display:none; return false;' onclick='hideMiscMenu();'> - - - Hide Menu - - - </a>
     </div>
     <div id='miscMenu' style='clear:right;'>
     
     <div id='tutorialsHeader' style='display:none;'><a href='https://www.youtube.com/channel/UChSbx9PDkOabNEdutCu-V-Q' target='_blank'>Video Tutorials</a></div>
-    <div id='chatHide' style='display:none;'><a href='#' onclick='hideChatbox();'>Hide Chat</a></div>
-    <div id='chatShow' style='display:none;'><a  href='#' onclick='showChatbox();'>Show Chat</a></div>
+    <div id='chatHide' style='display:none;'><a href='#' onclick='hideChatbox(); return false;'>Hide Chat</a></div>
+    <div id='chatShow' style='display:none;'><a  href='#' onclick='showChatbox(); return false;'>Show Chat</a></div>
     </div>
     </td></tr>
     </table>
@@ -77,8 +77,8 @@
     
     <div id='profilebox' style='display:none;'>
       <div id='profileboxAnnouncement'>
-        <div id='hideProfile' style='float:right;'><a href='#' onclick='hideProfilebox();'>[Hide]</a></div>
-        <div>Official Information <span style='display:none;'>for <b><span id='profileSymbol'>XRP</span></b> </span>by <b><span id='profileboxIssuer'>Ripple</span></b> <a href='#' id='editProfileName' onclick='showDisplayName();' style='display:none; white-space:nowrap;'>[Edit Name]</a></div>
+        <div id='hideProfile' style='float:right;'><a href='#' onclick='hideProfilebox(); return false;'>[Hide]</a></div>
+        <div>Official Information <span style='display:none;'>for <b><span id='profileSymbol'>XRP</span></b> </span>by <b><span id='profileboxIssuer'>Ripple</span></b> <a href='#' id='editProfileName' onclick='showDisplayName(); return false;' style='display:none; white-space:nowrap;'>[Edit Name]</a></div>
       </div>
       <div id='profileboxInner'>
         
@@ -89,19 +89,19 @@
         <hr />
         <div id='profileOnBlockchain' style='text-align:center; font-style:italic;'>Posted directly on blockchain by the issuer and cannot be forged.</div>
         <hr />
-        <span id='editProfile' style='display:none;'><a href='#' onclick='showProfileSettings();' style='white-space:nowrap'>[Edit Post]</a> | </span> Last updated: <span id='profileboxDate'></span>
+        <span id='editProfile' style='display:none;'><a href='#' onclick='showProfileSettings(); return false;' style='white-space:nowrap'>[Edit Post]</a> | </span> Last updated: <span id='profileboxDate'></span>
         </div>
       </div>
     </div>
     
     <div id='chatbox' style='display:none;'>
       <div id='chatHeader'>
-        <div id='hideChat' style='float:right;'><a href='#' onclick='hideChatbox();'>[Hide]</a></div>
+        <div id='hideChat' style='float:right;'><a href='#' onclick='hideChatbox(); return false;'>[Hide]</a></div>
         <div id='chatTitle'>
         The World Exchange Chat Box
         </div>
         <div id='chatSettings' style='display:none;'>
-        Your Display Name: <a id='displayName' href='#' onclick='showDisplayName();'>&lt; Click Here to Set &gt;</a>
+        Your Display Name: <a id='displayName' href='#' onclick='showDisplayName(); return false;'>&lt; Click Here to Set &gt;</a>
         </div>
       </div>
       <div id='chatHistory'>
@@ -316,7 +316,7 @@
                 <div id='issuer2Width' style='width:30%; text-align:right;'>
                 <div style='padding-right:5%;'>
                 <div id='backedby2'>Backed by <span id='issuer2'> </span></div>
-                <div id='sendOptionsLabel' style='display:none;'><span id='destTagDisplay'>Dest. Tag: <span id='currentDestinationTag'>None</span> | </span><a href='#' onclick='showSendOptions();' id='setOptionalFields'>Set Optional Fields</a></div>
+                <div id='sendOptionsLabel' style='display:none;'><span id='destTagDisplay'>Dest. Tag: <span id='currentDestinationTag'>None</span> | </span><a href='#' onclick='showSendOptions(); return false;' id='setOptionalFields'>Set Optional Fields</a></div>
                 </div>
                 </div>
               </div>
