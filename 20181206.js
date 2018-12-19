@@ -560,7 +560,7 @@ function loadAccount(loadOrderbookNext) {
     // Show account information only if logged in
     var tag = "div";
     if(address=="") tag="span";
-    var commonMenu = "<"+tag+" id='tutorialsHeader'><a href='https://www.youtube.com/playlist?list=PLHAK7FXoElZOyM6MaQ_O_i6ATap2k9r-o' target='_blank'>Video Tutorials</a></div>"+(address==""? " &nbsp; ":"")+"<"+tag+" id='chatHide' "+(showChat? "":"style='display:none;'")+"><a href='#' onclick='hideChatbox(); "+(isMobile()? "hideMiscMenu();":"")+" return false;'>Hide Chat</a></"+tag+"><"+tag+" id='chatShow' "+(!showChat? "":"style='display:none;'")+"><a href='#' onclick='showChatbox(); "+(isMobile()? "hideMiscMenu();":"")+" return false;'>Show Chat</a></"+tag+">";
+    var commonMenu = (address==""? " &nbsp; ":"")+"<"+tag+" id='chatHide' "+(showChat? "":"style='display:none;'")+"><a href='#' onclick='hideChatbox(); "+(isMobile()? "hideMiscMenu();":"")+" return false;'>Hide Chat</a></"+tag+"><"+tag+" id='chatShow' "+(!showChat? "":"style='display:none;'")+"><a href='#' onclick='showChatbox(); "+(isMobile()? "hideMiscMenu();":"")+" return false;'>Show Chat</a></"+tag+">";
     if($.trim($("#miscMenu").html())=="") {
       changeMiscMenu = true;
     }
