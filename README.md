@@ -13,6 +13,6 @@ This project/site is nothing more than a single HTML page calling already existi
 
 This project can be downloaded via Github's "Download as Zip" to use, customize, or incorporate into your own Ripple-related projects; to launch the page, just open the index.html file in any browser with javascript enabled.
 
-The page should serve as a helpful working example for much of Ripple's API functionality, which has been around since 2014 but lacks the tools and UIs of other blockchain ecosystems.
+The page should serve as a helpful working example for much of Ripple's API functionality, which has been around since 2014 but lacks the tools and UIs of other blockchain ecosystems, as well as a proof-of-concept for what blockchain would look like in real-world use.
 
 If there are any questions, feel free to ask or reach out at contact@theworldexchange.net
