@@ -9,9 +9,9 @@ Very simple, "vanilla" 100% HTML client-side-only site demonstrating much of Rip
 - Bonus: Chat box feature running entirely on Ripple, decentralized and stored forever, doubles as a free notary because nothing can ever be changed or removed once it's up.
 - Bonus 2: Ripple Names is back and re-implemented entirely on the ledger.
 
-This project/site is nothing more than a single HTML page calling already existing functionality on Ripple's blockchain network.  No additional feature or functionality is added by this site.  It is analogous to the client-side HTML page for Ethereum called MyEtherWallet, except the underlying blockchain here has built-in exchange issuance, trading, and compliance functionality.
+This project/site is nothing more than a single HTML page calling already existing functionality on Ripple's blockchain network.  No additional feature or functionality is added by this site.  It is analogous to the client-side HTML page for Ethereum called MyEtherWallet, except the underlying blockchain here has built-in exchange issuance, trading, and compliance functionality.  Similarly, if you are concerned about security, you should download the page itself and save it rather than go online each time (in case your browser gets intercepted, the domain name gets hijacked/mistyped, etc).
 
-This project can be downloaded via Github's "Download as Zip" to use, customize, or incorporate into your own Ripple-related projects; to launch the page, just open the index.html file in any browser with javascript enabled.
+This project can be downloaded via Github's "Download as Zip" to use.  To launch the page, just open the index.html file in any browser with javascript enabled.
 
 The page should serve as a helpful working example for much of Ripple's API functionality, which has been around since 2014 but lacks the tools and UIs of other blockchain ecosystems, as well as a proof-of-concept for what blockchain would look like in real-world use.
 
