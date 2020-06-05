@@ -11,7 +11,7 @@ This project/site is nothing more than a single HTML page calling already existi
 
 This project can be downloaded via Github's "Download as Zip" to use.  To launch the page, just open the index.html file in any browser with javascript enabled.  
 
-Previously, there was a chatbox feature added, but it has been removed due to it adding potential security risk and overall deviating from the "vanilla" wallet objective of this project by adding something so extraneous.  For those still interested to see how it might work on blockchain, it can be enabled by setting the var chatEnabled line to true in the JS file (after you download your own copy).
+Previously, there was a chatbox feature added, but it has been removed due to it adding potential security risk from allowing input from other users on the page and overall deviating from the "vanilla" wallet objective of this project by adding something so extraneous.  For those still interested to see how it might work on blockchain, it can be enabled by setting the var chatEnabled line to true in the JS file (after you download your own copy).
 
 The page should serve as a helpful working example for much of Ripple's API functionality, which has been around since 2014 but lacks the tools and UIs of other blockchain ecosystems, as well as a proof-of-concept for what blockchain would look like in real-world use.
 
