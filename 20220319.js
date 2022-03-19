@@ -9,7 +9,7 @@
 // Servers added to the list are selected from at random to distribute load across the network
 var servers = [
   'wss://xrplcluster.com/',
-  'wss://s1.ripple.com/',
+  //'wss://s1.ripple.com/',
   //'wss://s2.ripple.com/',
   //'wss://s-east.ripple.com/',
   //'wss://s-west.ripple.com/'
