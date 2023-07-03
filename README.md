@@ -4,7 +4,7 @@ Very simple, "vanilla" 100% HTML client-side-only site demonstrating much of Rip
 - Trading of symbols (buy/sell)
 - Issuing new symbols, including Ripple's KYC features like allowing only authorized token holders.
 - Sending/receiving symbols
-- Bid/ask orderbooks for any symbol with autobridging implemented to connect all XRP-traded symbols.
+- Bid/ask orderbooks for any symbol with auto-bridging implemented to connect all XRP-traded symbols.
 - Fully client-side implementation for all the benefits of a "cold wallet" (no storing or passing of information on remote servers), including the ability to both generate and verify valid wallets/addresses completely offline by saving the webpage to your desktop.
 
 This project/site is nothing more than a single HTML page calling already existing functionality on Ripple's blockchain network.  No additional feature or functionality is added by this site.  It is analogous to the client-side HTML page for Ethereum called MyEtherWallet, except the underlying blockchain here has built-in exchange issuance, trading, and compliance functionality.  Similarly, if you are concerned about security, you should download the page itself and save it rather than go online each time (in case your browser gets intercepted, the domain name gets hijacked/mistyped, etc).
